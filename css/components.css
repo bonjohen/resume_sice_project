@@ -23,6 +23,7 @@
   padding-bottom: var(--space-2);
   margin-bottom: var(--space-3);
   text-align: left;
+  font-size: var(--font-size-facet-heading);
 }
 
 .objective {
@@ -39,7 +40,7 @@
 .facet-info-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 var(--space-4) 0;
+  margin: 0 0 var(--space-2) 0;
 }
 
 .info-item {
@@ -53,13 +54,40 @@
   border-bottom: none;
 }
 
-.info-item strong {
+.info-heading {
+  font-size: var(--font-size-section-heading);
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-heading);
+  margin: 0 0 var(--space-2) 0;
+  font-family: var(--font-heading);
 }
 
 .info-content {
   margin-top: var(--space-2);
+}
+
+/* Skill Groups */
+.skill-group {
+  margin-bottom: var(--space-2);
+}
+
+.skill-name {
+  font-size: var(--font-size-subsection-heading);
+  font-weight: 600;
+  color: var(--text-heading);
+  margin: 0 0 var(--space-1) 0;
+  font-family: var(--font-heading);
+}
+
+.skill-keywords {
+  font-size: var(--font-size-small);
+  margin: 0;
+}
+
+/* Contact Details */
+.contact-details {
+  font-size: var(--font-size-small);
+  margin: 0;
 }
 
 /* Job Items */
@@ -80,22 +108,34 @@
 }
 
 .job-title {
-  font-size: var(--step-0);
+  font-size: var(--font-size-job-title);
   margin: 0;
+  font-weight: 600;
+  color: var(--text-heading);
+  font-family: var(--font-heading);
 }
 
 .job-details {
-  font-size: var(--step--1);
+  font-size: var(--font-size-job-details);
   color: var(--text-muted);
   margin-bottom: var(--space-2);
 }
 
 .job-summary {
   margin-bottom: var(--space-2);
+  font-size: var(--font-size-job-summary);
 }
 
 .job-highlights {
   margin-top: var(--space-2);
+  font-size: var(--font-size-job-highlights);
+}
+
+.highlights-heading {
+  font-size: var(--font-size-job-highlights);
+  font-weight: 600;
+  margin: 0 0 var(--space-1) 0;
+  color: var(--text-heading);
 }
 
 .highlights-list {
@@ -132,12 +172,12 @@
 }
 
 .degree {
-  font-size: var(--step-0);
+  font-size: var(--font-size-degree);
   margin: 0;
 }
 
 .education-details {
-  font-size: var(--step--1);
+  font-size: var(--font-size-education-details);
   color: var(--text-muted);
   margin-bottom: var(--space-2);
 }
@@ -156,11 +196,12 @@
 }
 
 .basic-info h3 {
-  font-size: var(--step-1);
+  font-size: var(--font-size-section-heading);
   color: var(--text-heading);
   margin-bottom: var(--space-3);
   border-bottom: 1px solid var(--border);
   padding-bottom: var(--space-2);
+  font-weight: 600;
 }
 
 .personal-info-list {
@@ -174,9 +215,10 @@
 }
 
 .info-header h4 {
-  font-size: var(--step-0);
+  font-size: var(--font-size-subsection-heading);
   color: var(--brand);
   margin: 0;
+  font-weight: 600;
 }
 
 .info-details p {

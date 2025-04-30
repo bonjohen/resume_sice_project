@@ -1,19 +1,22 @@
 /*
  * Typography Styles
  * Phase II Implementation
+ *
+ * This file only contains typography styles that reference
+ * the font size variables defined in design-system.css
  */
 
 /* Base Typography */
 body {
   line-height: 1.6;
-  font-size: var(--step-0);
+  font-size: var(--font-size-body);
   font-family: var(--font-body);
   color: var(--text);
 }
 
 /* Heading Scale */
 h1 {
-  font-size: var(--step-3);
+  font-size: var(--font-size-h1);
   line-height: 1.2;
   margin-bottom: var(--space-3);
   font-family: var(--font-heading);
@@ -22,7 +25,7 @@ h1 {
 }
 
 h2 {
-  font-size: var(--step-2);
+  font-size: var(--font-size-h2);
   line-height: 1.3;
   margin-bottom: var(--space-3);
   font-family: var(--font-heading);
@@ -31,7 +34,7 @@ h2 {
 }
 
 h3 {
-  font-size: var(--step-1);
+  font-size: var(--font-size-h3);
   line-height: 1.4;
   margin-bottom: var(--space-2);
   font-family: var(--font-heading);
@@ -40,7 +43,7 @@ h3 {
 }
 
 h4 {
-  font-size: var(--step-0);
+  font-size: var(--font-size-h4);
   line-height: 1.5;
   margin-bottom: var(--space-2);
   font-family: var(--font-heading);
@@ -50,7 +53,7 @@ h4 {
 
 /* Small text */
 small, .text-small {
-  font-size: var(--step--1);
+  font-size: var(--font-size-small);
   line-height: 1.5;
 }
 

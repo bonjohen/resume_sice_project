@@ -15,16 +15,54 @@
   --space-5: 4rem;     /* 64px */
 
   /*
-   * Fluid Typography Scale using clamp()
+   * Base Fluid Typography Scale using clamp()
    * Format: clamp(min, preferred, max)
    * This ensures text scales smoothly between viewport sizes
    */
   --step--1: clamp(0.75rem, 0.7vw + 0.6rem, 0.875rem);   /* Small text */
   --step-0: clamp(1rem, 0.9vw + 0.8rem, 1.125rem);       /* Body text */
-  --step-1: clamp(1.25rem, 1.2vw + 1rem, 1.5rem);        /* H3, subheadings */
-  --step-2: clamp(1.5rem, 1.8vw + 1.2rem, 2rem);         /* H2 */
-  --step-3: clamp(2rem, 2.5vw + 1.5rem, 3rem);           /* H1 */
-  --step-4: clamp(2.5rem, 3.5vw + 1.75rem, 4rem);        /* Hero text */
+  --step-1: clamp(1.05rem, 0.95vw + 0.85rem, 1.15rem);   /* H3, subheadings */
+  --step-2: clamp(1.1rem, 1vw + 0.9rem, 1.25rem);        /* H2 */
+  --step-3: clamp(1.2rem, 1.1vw + 1rem, 1.4rem);         /* H1 */
+  --step-4: clamp(1.3rem, 1.2vw + 1.1rem, 1.5rem);       /* Hero text */
+
+  /*
+   * Component-specific Typography
+   * All font sizes defined in one place for easy management
+   */
+  /* General typography */
+  --font-size-body: var(--step-0);
+  --font-size-small: var(--step--1);
+
+  /* Headings */
+  --font-size-h1: var(--step-2);
+  --font-size-h2: var(--step-1);
+  --font-size-h3: var(--step-0);
+  --font-size-h4: var(--step--1);
+
+  /* Hero section */
+  --font-size-hero-title: var(--step-4);
+  --font-size-hero-tagline: var(--step-2);
+  --font-size-hero-shrink-title: var(--step-2);
+  --font-size-hero-shrink-tagline: var(--step-0);
+
+  /* Facet sections */
+  --font-size-facet-heading: var(--step-0);
+  --font-size-facet-pill: var(--step--1);
+
+  /* Content sections */
+  --font-size-section-heading: var(--step-0);
+  --font-size-subsection-heading: var(--step--1);
+
+  /* Job items */
+  --font-size-job-title: var(--step-0);
+  --font-size-job-details: var(--step--1);
+  --font-size-job-summary: var(--step--1);
+  --font-size-job-highlights: var(--step--1);
+
+  /* Education items */
+  --font-size-degree: var(--step--1);
+  --font-size-education-details: var(--step--1);
 
   /*
    * Color Tokens

@@ -229,44 +229,62 @@ function generateFacetSections() {
 
         // Add objective
         const objectiveItem = document.createElement('li');
-        objectiveItem.className = 'info-item'; // Changed to match personal-info structure
+        objectiveItem.className = 'info-item';
 
-        const objectiveTitle = document.createElement('strong');
+        const objectiveTitle = document.createElement('h3');
+        objectiveTitle.className = 'info-heading';
         objectiveTitle.textContent = 'Career Objective';
 
-        const objectiveText = document.createElement('span');
-        objectiveText.textContent = `: ${facet.objective}`;
+        const objectiveContent = document.createElement('div');
+        objectiveContent.className = 'info-content';
+
+        const objectiveText = document.createElement('p');
+        objectiveText.className = 'objective-text';
+        objectiveText.textContent = facet.objective;
+        objectiveContent.appendChild(objectiveText);
 
         objectiveItem.appendChild(objectiveTitle);
-        objectiveItem.appendChild(objectiveText);
+        objectiveItem.appendChild(objectiveContent);
         facetList.appendChild(objectiveItem);
 
         // Add description
         const descriptionItem = document.createElement('li');
-        descriptionItem.className = 'info-item'; // Changed to match personal-info structure
+        descriptionItem.className = 'info-item';
 
-        const descriptionTitle = document.createElement('strong');
+        const descriptionTitle = document.createElement('h3');
+        descriptionTitle.className = 'info-heading';
         descriptionTitle.textContent = 'Industry Impact';
 
-        const descriptionText = document.createElement('span');
-        descriptionText.textContent = `: ${facet.description || 'No description available.'}`;
+        const descriptionContent = document.createElement('div');
+        descriptionContent.className = 'info-content';
+
+        const descriptionText = document.createElement('p');
+        descriptionText.className = 'impact-text';
+        descriptionText.textContent = facet.description || 'No description available.';
+        descriptionContent.appendChild(descriptionText);
 
         descriptionItem.appendChild(descriptionTitle);
-        descriptionItem.appendChild(descriptionText);
+        descriptionItem.appendChild(descriptionContent);
         facetList.appendChild(descriptionItem);
 
         // Add my experience
         const experienceItem = document.createElement('li');
-        experienceItem.className = 'info-item'; // Changed to match personal-info structure
+        experienceItem.className = 'info-item';
 
-        const experienceTitle = document.createElement('strong');
+        const experienceTitle = document.createElement('h3');
+        experienceTitle.className = 'info-heading';
         experienceTitle.textContent = 'My Experience';
 
-        const experienceText = document.createElement('span');
-        experienceText.textContent = `: ${facet.myRole || 'No experience information available.'}`;
+        const experienceContent = document.createElement('div');
+        experienceContent.className = 'info-content';
+
+        const experienceText = document.createElement('p');
+        experienceText.className = 'experience-text';
+        experienceText.textContent = facet.myRole || 'No experience information available.';
+        experienceContent.appendChild(experienceText);
 
         experienceItem.appendChild(experienceTitle);
-        experienceItem.appendChild(experienceText);
+        experienceItem.appendChild(experienceContent);
         facetList.appendChild(experienceItem);
 
         section.appendChild(facetList);
@@ -534,7 +552,8 @@ function createBasicInfoSection() {
     infoItem.className = 'info-item';
 
     // Create a heading for the section
-    const heading = document.createElement('strong');
+    const heading = document.createElement('h3');
+    heading.className = 'info-heading';
     heading.textContent = 'Personal Information';
 
     // Create a container for the personal info content
@@ -543,6 +562,7 @@ function createBasicInfoSection() {
 
     // Add contact information without the "Contact:" label
     const contactDetails = document.createElement('p');
+    contactDetails.className = 'contact-details';
     contactDetails.innerHTML = `Email: ${resumeData.basics.email}, Phone: ${resumeData.basics.phone}, Location: ${resumeData.basics.location.city}, ${resumeData.basics.location.region}`;
     infoContent.appendChild(contactDetails);
 
@@ -550,7 +570,6 @@ function createBasicInfoSection() {
 
     // Assemble the info item
     infoItem.appendChild(heading);
-    infoItem.appendChild(document.createTextNode(': '));
     infoItem.appendChild(infoContent);
 
     return infoItem;
@@ -566,7 +585,8 @@ function createSkillsSection() {
     infoItem.className = 'info-item';
 
     // Create a heading for the section
-    const heading = document.createElement('strong');
+    const heading = document.createElement('h3');
+    heading.className = 'info-heading';
     heading.textContent = 'Skills';
 
     // Create a container for the skills content
@@ -575,14 +595,24 @@ function createSkillsSection() {
 
     // Add each skill group
     resumeData.skills.forEach(skill => {
-        const skillGroup = document.createElement('p');
-        skillGroup.innerHTML = `<strong>${skill.name}:</strong> ${skill.keywords.join(', ')}`;
+        const skillGroup = document.createElement('div');
+        skillGroup.className = 'skill-group';
+
+        const skillName = document.createElement('h4');
+        skillName.className = 'skill-name';
+        skillName.textContent = `${skill.name}:`;
+
+        const skillKeywords = document.createElement('p');
+        skillKeywords.className = 'skill-keywords';
+        skillKeywords.textContent = skill.keywords.join(', ');
+
+        skillGroup.appendChild(skillName);
+        skillGroup.appendChild(skillKeywords);
         skillsContent.appendChild(skillGroup);
     });
 
     // Assemble the info item
     infoItem.appendChild(heading);
-    infoItem.appendChild(document.createTextNode(': '));
     infoItem.appendChild(skillsContent);
 
     return infoItem;
@@ -599,7 +629,8 @@ function createWorkHistorySection(templateId) {
     infoItem.className = 'info-item';
 
     // Create a heading for the section
-    const heading = document.createElement('strong');
+    const heading = document.createElement('h3');
+    heading.className = 'info-heading';
     heading.textContent = 'Work Experience';
 
     // Create a container for the work history content
@@ -727,7 +758,6 @@ function createWorkHistorySection(templateId) {
 
         // Assemble the info item
         infoItem.appendChild(heading);
-        infoItem.appendChild(document.createTextNode(': '));
         infoItem.appendChild(workContent);
 
         return infoItem;
@@ -773,12 +803,12 @@ function createWorkHistorySection(templateId) {
         jobHeader.appendChild(companyIcon);
 
         // Job title and company
-        const jobTitle = document.createElement('p');
+        const jobTitle = document.createElement('h3');
         jobTitle.className = 'job-title';
         if (job.position) {
-            jobTitle.innerHTML = `<strong>${job.position} at ${job.name}</strong>`;
+            jobTitle.textContent = `${job.position} at ${job.name}`;
         } else {
-            jobTitle.innerHTML = `<strong>${job.name}</strong>`;
+            jobTitle.textContent = `${job.name}`;
         }
 
         jobHeader.appendChild(jobTitle);
@@ -801,8 +831,9 @@ function createWorkHistorySection(templateId) {
             const highlightsDiv = document.createElement('div');
             highlightsDiv.className = 'job-highlights';
 
-            const highlightsHeading = document.createElement('p');
-            highlightsHeading.innerHTML = '<strong>Highlights:</strong>';
+            const highlightsHeading = document.createElement('h4');
+            highlightsHeading.className = 'highlights-heading';
+            highlightsHeading.textContent = 'Highlights:';
             highlightsDiv.appendChild(highlightsHeading);
 
             const highlightsList = document.createElement('ul');
@@ -830,7 +861,6 @@ function createWorkHistorySection(templateId) {
 
     // Assemble the info item
     infoItem.appendChild(heading);
-    infoItem.appendChild(document.createTextNode(': '));
     infoItem.appendChild(workContent);
 
     return infoItem;
@@ -846,7 +876,8 @@ function createEducationSection() {
     infoItem.className = 'info-item';
 
     // Create a heading for the section
-    const heading = document.createElement('strong');
+    const heading = document.createElement('h3');
+    heading.className = 'info-heading';
     heading.textContent = 'Education';
 
     // Create a container for the education content
@@ -861,7 +892,6 @@ function createEducationSection() {
 
         // Assemble the info item even if there's no education data
         infoItem.appendChild(heading);
-        infoItem.appendChild(document.createTextNode(': '));
         infoItem.appendChild(educationContent);
 
         return infoItem;
@@ -893,9 +923,9 @@ function createEducationSection() {
         eduHeader.appendChild(institutionIcon);
 
         // Degree and area
-        const degree = document.createElement('p');
+        const degree = document.createElement('h4');
         degree.className = 'degree';
-        degree.innerHTML = `<strong>${edu.studyType} in ${edu.area}</strong>`;
+        degree.textContent = `${edu.studyType} in ${edu.area}`;
         eduHeader.appendChild(degree);
 
         eduDiv.appendChild(eduHeader);
@@ -918,7 +948,6 @@ function createEducationSection() {
 
     // Assemble the info item
     infoItem.appendChild(heading);
-    infoItem.appendChild(document.createTextNode(': '));
     infoItem.appendChild(educationContent);
 
     return infoItem;
@@ -998,14 +1027,20 @@ function rebuildContentArea() {
             const objectiveItem = document.createElement('li');
             objectiveItem.className = 'info-item';
 
-            const objectiveTitle = document.createElement('strong');
+            const objectiveTitle = document.createElement('h3');
+            objectiveTitle.className = 'info-heading';
             objectiveTitle.textContent = 'Career Objective';
 
-            const objectiveText = document.createElement('span');
-            objectiveText.textContent = `: ${facet.objective}`;
+            const objectiveContent = document.createElement('div');
+            objectiveContent.className = 'info-content';
+
+            const objectiveText = document.createElement('p');
+            objectiveText.className = 'objective-text';
+            objectiveText.textContent = facet.objective;
+            objectiveContent.appendChild(objectiveText);
 
             objectiveItem.appendChild(objectiveTitle);
-            objectiveItem.appendChild(objectiveText);
+            objectiveItem.appendChild(objectiveContent);
             facetList.appendChild(objectiveItem);
         }
 
@@ -1014,14 +1049,20 @@ function rebuildContentArea() {
             const descriptionItem = document.createElement('li');
             descriptionItem.className = 'info-item';
 
-            const descriptionTitle = document.createElement('strong');
+            const descriptionTitle = document.createElement('h3');
+            descriptionTitle.className = 'info-heading';
             descriptionTitle.textContent = 'Industry Impact';
 
-            const descriptionText = document.createElement('span');
-            descriptionText.textContent = `: ${facet.description}`;
+            const descriptionContent = document.createElement('div');
+            descriptionContent.className = 'info-content';
+
+            const descriptionText = document.createElement('p');
+            descriptionText.className = 'impact-text';
+            descriptionText.textContent = facet.description;
+            descriptionContent.appendChild(descriptionText);
 
             descriptionItem.appendChild(descriptionTitle);
-            descriptionItem.appendChild(descriptionText);
+            descriptionItem.appendChild(descriptionContent);
             facetList.appendChild(descriptionItem);
         }
 
@@ -1030,14 +1071,20 @@ function rebuildContentArea() {
             const experienceItem = document.createElement('li');
             experienceItem.className = 'info-item';
 
-            const experienceTitle = document.createElement('strong');
+            const experienceTitle = document.createElement('h3');
+            experienceTitle.className = 'info-heading';
             experienceTitle.textContent = 'My Experience';
 
-            const experienceText = document.createElement('span');
-            experienceText.textContent = `: ${facet.myRole}`;
+            const experienceContent = document.createElement('div');
+            experienceContent.className = 'info-content';
+
+            const experienceText = document.createElement('p');
+            experienceText.className = 'experience-text';
+            experienceText.textContent = facet.myRole;
+            experienceContent.appendChild(experienceText);
 
             experienceItem.appendChild(experienceTitle);
-            experienceItem.appendChild(experienceText);
+            experienceItem.appendChild(experienceContent);
             facetList.appendChild(experienceItem);
         }
 

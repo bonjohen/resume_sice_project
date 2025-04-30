@@ -32,15 +32,15 @@ body {
 }
 
 .hero h1 {
-  font-size: var(--step-3);
+  font-size: var(--font-size-hero-title);
   margin-bottom: var(--space-1);
   color: var(--text-heading);
 }
 
 .hero .tagline {
-  font-size: var(--step-1);
+  font-size: var(--font-size-hero-tagline);
   color: var(--text-muted);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 /* Shrink header on scroll */
@@ -50,13 +50,14 @@ body {
 }
 
 .hero.shrink h1 {
-  font-size: var(--step-1);
+  font-size: var(--font-size-hero-shrink-title);
   margin-bottom: var(--space-1);
 }
 
 .hero.shrink .tagline {
-  font-size: var(--step--1);
+  font-size: var(--font-size-hero-shrink-tagline);
   margin-bottom: var(--space-1);
+  opacity: 0.8;
 }
 
 .hero.shrink .facets ul {
@@ -82,7 +83,7 @@ body {
   border-radius: 2rem;
   text-decoration: none;
   color: var(--text);
-  font-size: var(--step--1);
+  font-size: var(--font-size-facet-pill);
   transition: all 0.2s ease;
 }
 
@@ -116,11 +117,11 @@ body {
 /* Responsive header adjustments */
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: var(--step-2);
+    font-size: var(--font-size-h2);
   }
 
   .hero .tagline {
-    font-size: var(--step-0);
+    font-size: var(--font-size-small);
   }
 
   .facets ul {
