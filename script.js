@@ -514,13 +514,14 @@ function renderResumeContent(facetId, template) {
     const skills = createSkillsSection();
     facetList.appendChild(skills);
 
-    // Add work history section based on template
+    // Always add work history and education sections regardless of template
     const workHistory = createWorkHistorySection(template);
     facetList.appendChild(workHistory);
 
-    // Add education section
     const education = createEducationSection();
     facetList.appendChild(education);
+
+    console.log(`Rendered content for facet ${facetId} with template ${template}`);
 }
 
 /**
@@ -625,6 +626,9 @@ function createWorkHistorySection(templateId) {
 
         console.log('Filtering work history with cutoff date:', cutoffDate);
 
+        // Make a copy of the original entries before filtering
+        const originalEntries = [...workEntries];
+
         workEntries = workEntries.filter(job => {
             // Parse the end date string (format: YYYY-MM)
             let endDateObj;
@@ -641,6 +645,12 @@ function createWorkHistorySection(templateId) {
         });
 
         console.log('Filtered work entries:', workEntries.length);
+
+        // If no entries match the filter, use all entries
+        if (workEntries.length === 0) {
+            console.log('No entries match the filter, using all entries');
+            workEntries = originalEntries;
+        }
     }
 
     // Apply summary inclusion/exclusion filters
@@ -737,15 +747,17 @@ function createWorkHistorySection(templateId) {
         companyIcon.className = 'company-icon';
 
         // Determine which icon to use based on company type or name
-        let iconPath = 'assets/icons/companies/tech-company.svg';
-        if (job.name.toLowerCase().includes('data') || job.position.toLowerCase().includes('data')) {
-            iconPath = 'assets/icons/companies/data-company.svg';
-        } else if (job.name.toLowerCase().includes('consult') || job.position.toLowerCase().includes('consult')) {
-            iconPath = 'assets/icons/companies/consulting-company.svg';
+        let iconPath = 'assets/icons/code.svg'; // Default to code icon
+        if (job.name.toLowerCase().includes('data') || (job.position && job.position.toLowerCase().includes('data'))) {
+            iconPath = 'assets/icons/database.svg';
+        } else if (job.name.toLowerCase().includes('consult') || (job.position && job.position.toLowerCase().includes('consult'))) {
+            iconPath = 'assets/icons/users.svg';
         } else if (job.name.toLowerCase().includes('university') || job.name.toLowerCase().includes('college') || job.name.toLowerCase().includes('school')) {
-            iconPath = 'assets/icons/companies/education.svg';
-        } else if (job.name.toLowerCase().includes('startup') || job.position.toLowerCase().includes('founder')) {
-            iconPath = 'assets/icons/companies/startup.svg';
+            iconPath = 'assets/icons/user.svg';
+        } else if (job.name.toLowerCase().includes('startup') || (job.position && job.position.toLowerCase().includes('founder'))) {
+            iconPath = 'assets/icons/workflow.svg';
+        } else if (job.name.toLowerCase().includes('ai') || (job.position && job.position.toLowerCase().includes('ai'))) {
+            iconPath = 'assets/icons/ai.svg';
         }
 
         // Fetch and insert the SVG
@@ -846,6 +858,13 @@ function createEducationSection() {
         const noEducationMessage = document.createElement('p');
         noEducationMessage.textContent = 'No education history to display.';
         educationContent.appendChild(noEducationMessage);
+
+        // Assemble the info item even if there's no education data
+        infoItem.appendChild(heading);
+        infoItem.appendChild(document.createTextNode(': '));
+        infoItem.appendChild(educationContent);
+
+        return infoItem;
     }
 
     // Add each education entry
@@ -862,7 +881,7 @@ function createEducationSection() {
         institutionIcon.className = 'institution-icon';
 
         // Fetch and insert the education SVG
-        fetch('assets/icons/companies/education.svg')
+        fetch('assets/icons/user.svg')
             .then(response => response.text())
             .then(svgContent => {
                 institutionIcon.innerHTML = svgContent;

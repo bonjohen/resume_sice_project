@@ -1,0 +1,72 @@
+/*
+ * Icon Styles
+ * Phase II Implementation
+ */
+
+/* Icon styles for facet navigation */
+.facets .icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: var(--space-2);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Define icon paths */
+.icon.user {
+  background-image: url('../assets/icons/user.svg');
+}
+
+.icon.code {
+  background-image: url('../assets/icons/code.svg');
+}
+
+.icon.database {
+  background-image: url('../assets/icons/database.svg');
+}
+
+.icon.server {
+  background-image: url('../assets/icons/server.svg');
+}
+
+.icon.cloud {
+  background-image: url('../assets/icons/cloud.svg');
+}
+
+.icon.users {
+  background-image: url('../assets/icons/users.svg');
+}
+
+.icon.workflow {
+  background-image: url('../assets/icons/workflow.svg');
+}
+
+.icon.ai {
+  background-image: url('../assets/icons/ai.svg');
+}
+
+/* Company icons */
+.company-icon, .institution-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-icon svg, .institution-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--brand);
+}
+
+/* Dark mode adjustments for SVG icons */
+:root[data-theme="dark"] .company-icon svg,
+:root[data-theme="dark"] .institution-icon svg,
+@media (prefers-color-scheme: dark) .company-icon svg:not([data-theme="light"]),
+@media (prefers-color-scheme: dark) .institution-icon svg:not([data-theme="light"]) {
+  stroke: var(--brand-light);
+}
