@@ -25,6 +25,7 @@
   --step-2: clamp(1.1rem, 1vw + 0.9rem, 1.25rem);        /* H2 */
   --step-3: clamp(1.2rem, 1.1vw + 1rem, 1.4rem);         /* H1 */
   --step-4: clamp(1.3rem, 1.2vw + 1.1rem, 1.5rem);       /* Hero text */
+  --step-5: clamp(1.5rem, 1.4vw + 1.2rem, 1.7rem);       /* Superhero text */
 
   /*
    * Component-specific Typography
@@ -41,10 +42,10 @@
   --font-size-h4: var(--step--1);
 
   /* Hero section */
-  --font-size-hero-title: var(--step-4);
-  --font-size-hero-tagline: var(--step-2);
-  --font-size-hero-shrink-title: var(--step-2);
-  --font-size-hero-shrink-tagline: var(--step-0);
+  --font-size-hero-title: var(--step-2);
+  --font-size-hero-tagline: var(--step-3);
+  --font-size-hero-shrink-title: var(--step-3);
+  --font-size-hero-shrink-tagline: var(--step-1);
 
   /* Facet sections */
   --font-size-facet-heading: var(--step-0);
