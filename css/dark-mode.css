@@ -1,0 +1,182 @@
+/*
+ * Dark Mode Styles
+ * Phase II Implementation
+ */
+
+/* Dark mode color tokens */
+:root[data-theme="dark"] {
+  --brand: #5dade2;            /* Lighter brand color for dark mode */
+  --brand-light: #85c1e9;      /* Even lighter variant for hover states */
+  --surface: #1a1a1a;          /* Dark background */
+  --surface-alt: #2c2c2c;      /* Alternative dark background for sections */
+  --text: #f0f0f0;             /* Light text color */
+  --text-muted: #a0a0a0;       /* Secondary text color */
+  --text-heading: #ffffff;     /* Heading text color */
+  --border: #444444;           /* Border color */
+  --border-light: #333333;     /* Lighter border color */
+}
+
+/* System preference dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --brand: #5dade2;            /* Lighter brand color for dark mode */
+    --brand-light: #85c1e9;      /* Even lighter variant for hover states */
+    --surface: #1a1a1a;          /* Dark background */
+    --surface-alt: #2c2c2c;      /* Alternative dark background for sections */
+    --text: #f0f0f0;             /* Light text color */
+    --text-muted: #a0a0a0;       /* Secondary text color */
+    --text-heading: #ffffff;     /* Heading text color */
+    --border: #444444;           /* Border color */
+    --border-light: #333333;     /* Lighter border color */
+  }
+}
+
+/* Dark mode toggle button */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--brand);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--brand-light);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Dark mode specific adjustments */
+:root[data-theme="dark"] body,
+@media (prefers-color-scheme: dark) body:not([data-theme="light"]) {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+/* Basic elements */
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] h5,
+:root[data-theme="dark"] h6,
+@media (prefers-color-scheme: dark) h1:not([data-theme="light"]),
+@media (prefers-color-scheme: dark) h2:not([data-theme="light"]),
+@media (prefers-color-scheme: dark) h3:not([data-theme="light"]),
+@media (prefers-color-scheme: dark) h4:not([data-theme="light"]),
+@media (prefers-color-scheme: dark) h5:not([data-theme="light"]),
+@media (prefers-color-scheme: dark) h6:not([data-theme="light"]) {
+  color: var(--text-heading);
+}
+
+:root[data-theme="dark"] a,
+@media (prefers-color-scheme: dark) a:not([data-theme="light"]) {
+  color: var(--brand);
+}
+
+:root[data-theme="dark"] a:hover,
+@media (prefers-color-scheme: dark) a:hover:not([data-theme="light"]) {
+  color: var(--brand-light);
+}
+
+/* Sections */
+:root[data-theme="dark"] .facet-section,
+@media (prefers-color-scheme: dark) .facet-section:not([data-theme="light"]) {
+  background-color: var(--surface-alt);
+  border-color: var(--border);
+}
+
+:root[data-theme="dark"] .facet-section h2,
+@media (prefers-color-scheme: dark) .facet-section h2:not([data-theme="light"]) {
+  color: var(--text-heading);
+  border-bottom-color: var(--border);
+}
+
+:root[data-theme="dark"] .facets a,
+@media (prefers-color-scheme: dark) .facets a:not([data-theme="light"]) {
+  background-color: var(--surface-alt);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .facets a:hover,
+@media (prefers-color-scheme: dark) .facets a:hover:not([data-theme="light"]) {
+  background-color: var(--brand);
+  color: white;
+}
+
+:root[data-theme="dark"] .hero,
+@media (prefers-color-scheme: dark) .hero:not([data-theme="light"]) {
+  background-color: var(--surface);
+  border-bottom-color: var(--border);
+}
+
+:root[data-theme="dark"] .objective,
+@media (prefers-color-scheme: dark) .objective:not([data-theme="light"]) {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}
+
+:root[data-theme="dark"] .info-item,
+@media (prefers-color-scheme: dark) .info-item:not([data-theme="light"]) {
+  border-bottom-color: var(--border-light);
+}
+
+:root[data-theme="dark"] .info-header h4,
+@media (prefers-color-scheme: dark) .info-header h4:not([data-theme="light"]) {
+  color: var(--brand);
+}
+
+:root[data-theme="dark"] .info-item strong,
+@media (prefers-color-scheme: dark) .info-item strong:not([data-theme="light"]) {
+  color: var(--text-heading);
+}
+
+:root[data-theme="dark"] .basic-info h3,
+@media (prefers-color-scheme: dark) .basic-info h3:not([data-theme="light"]) {
+  color: var(--text-heading);
+  border-bottom-color: var(--border);
+}
+
+:root[data-theme="dark"] .template-selector,
+@media (prefers-color-scheme: dark) .template-selector:not([data-theme="light"]) {
+  color: var(--text);
+}
+
+:root[data-theme="dark"] select,
+@media (prefers-color-scheme: dark) select:not([data-theme="light"]) {
+  background-color: var(--surface-alt);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* Buttons */
+:root[data-theme="dark"] button,
+@media (prefers-color-scheme: dark) button:not([data-theme="light"]) {
+  background-color: var(--brand);
+  color: white;
+}
+
+:root[data-theme="dark"] button:hover,
+@media (prefers-color-scheme: dark) button:hover:not([data-theme="light"]) {
+  background-color: var(--brand-light);
+}
+
+/* Footer */
+:root[data-theme="dark"] footer,
+@media (prefers-color-scheme: dark) footer:not([data-theme="light"]) {
+  background-color: var(--surface-alt);
+  border-top-color: var(--border);
+}

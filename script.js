@@ -30,18 +30,18 @@ console.log('contentSection:', contentSection);
 async function init() {
     try {
         console.log('Initializing resume site...');
-        
+
         // Load JSON data
         console.log('Starting to load JSON data...');
         await Promise.all([loadResumeData(), loadFacetsData(), loadTemplatesData()]);
-        
+
         // Verify data was loaded correctly
         console.log('Data loaded check:', {
             resumeData: resumeData ? 'Loaded' : 'Missing',
             facetsData: facetsData ? 'Loaded' : 'Missing',
             templatesData: templatesData ? 'Loaded' : 'Missing'
         });
-        
+
         // Generate HTML structure from JSON data
         console.log('Generating hero section...');
         generateHeroSection();
@@ -55,7 +55,7 @@ async function init() {
 
         // Overview is already active by default
         currentFacet = '#overview';
-        
+
         console.log('Resume site initialized successfully');
     } catch (error) {
         console.error('Failed to initialize resume site:', error);
@@ -118,9 +118,9 @@ async function loadTemplatesData() {
  */
 function populateTemplateSelector() {
     if (!templatesData) return;
-    
+
     templateSelector.innerHTML = '';
-    
+
     Object.values(templatesData).forEach(template => {
         const option = document.createElement('option');
         option.value = template.id;
@@ -128,7 +128,7 @@ function populateTemplateSelector() {
         option.title = template.description;
         templateSelector.appendChild(option);
     });
-    
+
     // Set the default template
     templateSelector.value = currentTemplate;
 }
@@ -138,16 +138,18 @@ function populateTemplateSelector() {
  */
 function generateHeroSection() {
     if (!resumeData || !facetsData) return;
-    
-    // Create hero content
+
+    // Create hero content with name and tagline in a separate div above the pills
     heroSection.innerHTML = `
-        <h1>${resumeData.basics.name}</h1>
-        <p class="tagline">${resumeData.basics.label}</p>
+        <div class="hero-content">
+            <h1>${resumeData.basics.name}</h1>
+            <p class="tagline">${resumeData.basics.label}</p>
+        </div>
         <nav class="facets">
             <ul>
                 ${facetsData.map((facet) => `
-                    <li><a href="${facet.targetSelector}" 
-                          ${facet.title === "Overview" ? 'class="active"' : ''} 
+                    <li><a href="${facet.targetSelector}"
+                          ${facet.title === "Overview" ? 'class="active"' : ''}
                           aria-label="${facet.ariaLabel}">
                         <span class="icon ${facet.icon}"></span>${facet.title}
                     </a></li>
@@ -167,14 +169,14 @@ function generateFacetSections() {
     contentSection.innerHTML = '';
 
     // Create all facet sections
-    facetsData.forEach((facet, index) => {
+    facetsData.forEach(facet => {
         const section = document.createElement('section');
-        
+
         // Set ID based on facet targetSelector (without the # symbol)
         const targetId = facet.targetSelector.substring(1); // Remove the # from the targetSelector
         section.id = targetId;
         section.className = 'facet-section';
-        
+
         // Make the Overview section active by default
         if (facet.title === "Overview") {
             section.classList.add('active');
@@ -192,13 +194,13 @@ function generateFacetSections() {
         // Add objective
         const objectiveItem = document.createElement('li');
         objectiveItem.className = 'info-item'; // Changed to match personal-info structure
-        
+
         const objectiveTitle = document.createElement('strong');
         objectiveTitle.textContent = 'Career Objective';
-        
+
         const objectiveText = document.createElement('span');
         objectiveText.textContent = `: ${facet.objective}`;
-        
+
         objectiveItem.appendChild(objectiveTitle);
         objectiveItem.appendChild(objectiveText);
         facetList.appendChild(objectiveItem);
@@ -206,13 +208,13 @@ function generateFacetSections() {
         // Add description
         const descriptionItem = document.createElement('li');
         descriptionItem.className = 'info-item'; // Changed to match personal-info structure
-        
+
         const descriptionTitle = document.createElement('strong');
         descriptionTitle.textContent = 'Industry Impact';
-        
+
         const descriptionText = document.createElement('span');
         descriptionText.textContent = `: ${facet.description || 'No description available.'}`;
-        
+
         descriptionItem.appendChild(descriptionTitle);
         descriptionItem.appendChild(descriptionText);
         facetList.appendChild(descriptionItem);
@@ -220,13 +222,13 @@ function generateFacetSections() {
         // Add my experience
         const experienceItem = document.createElement('li');
         experienceItem.className = 'info-item'; // Changed to match personal-info structure
-        
+
         const experienceTitle = document.createElement('strong');
         experienceTitle.textContent = 'My Experience';
-        
+
         const experienceText = document.createElement('span');
         experienceText.textContent = `: ${facet.myRole || 'No experience information available.'}`;
-        
+
         experienceItem.appendChild(experienceTitle);
         experienceItem.appendChild(experienceText);
         facetList.appendChild(experienceItem);
@@ -240,10 +242,10 @@ function generateFacetSections() {
 
         contentSection.appendChild(section);
     });
-    
+
     // Set current facet to Overview
     currentFacet = '#overview';
-    
+
     // Render resume content for the overview section
     renderResumeContent(currentFacet, currentTemplate);
 }
@@ -270,7 +272,7 @@ function setupEventListeners() {
 
     // Print button
     printButton.addEventListener('click', handlePrintClick);
-    
+
     console.log('Event listeners set up, found', facetLinks.length, 'facet links');
 }
 
@@ -280,16 +282,16 @@ function setupEventListeners() {
  */
 function handleFacetClick(event) {
     event.preventDefault();
-    
+
     // Get the target section ID from the href attribute
     const targetSelector = event.currentTarget.getAttribute('href');
     console.log('Facet clicked:', targetSelector);
-    
+
     if (!targetSelector) {
         console.error('No target selector found in href attribute');
         return;
     }
-    
+
     // Remove the # from the beginning of the selector
     const targetId = targetSelector.substring(1);
     const targetSection = document.getElementById(targetId);
@@ -318,7 +320,7 @@ function handleFacetClick(event) {
 
     // Render resume content for this facet with current template
     renderResumeContent(currentFacet, currentTemplate);
-    
+
     console.log('Navigation complete, current facet:', currentFacet);
 }
 
@@ -380,17 +382,17 @@ function handleDownloadFilteredClick() {
 
     // Create a filtered copy of the resume data
     const filteredData = JSON.parse(JSON.stringify(resumeData));
-    
+
     // Apply template filters to work history
     if (filteredData.work && templateConfig.filters.work) {
         const filters = templateConfig.filters.work;
         let workEntries = [...filteredData.work];
-        
+
         // Apply year filter if specified
         if (filters.yearsBack) {
             const cutoffDate = new Date();
             cutoffDate.setFullYear(cutoffDate.getFullYear() - filters.yearsBack);
-            
+
             workEntries = workEntries.filter(job => {
                 const endDate = job.endDate ? new Date(job.endDate) : new Date();
                 return endDate >= cutoffDate;
@@ -403,11 +405,11 @@ function handleDownloadFilteredClick() {
             const summaryItems = filteredData.work.filter(job => job.isSummary);
             workEntries = [...new Set([...workEntries, ...summaryItems])];
         }
-        
+
         if (filters.excludeIsSummary) {
             workEntries = workEntries.filter(job => !job.isSummary);
         }
-        
+
         // Update the work array in the filtered data
         filteredData.work = workEntries;
     }
@@ -455,27 +457,28 @@ function renderResumeContent(facetId, template) {
     // Clear existing content
     contentContainer.innerHTML = '';
 
-    // Create resume content based on template
-    const content = document.createElement('div');
+    // Create a facet-info-list to match the structure of the facet sections
+    const infoList = document.createElement('ul');
+    infoList.className = 'facet-info-list';
 
     // Add basic info section
     const basicInfo = createBasicInfoSection();
-    content.appendChild(basicInfo);
+    infoList.appendChild(basicInfo);
 
     // Add skills section
     const skills = createSkillsSection();
-    content.appendChild(skills);
+    infoList.appendChild(skills);
 
     // Add work history section based on template
     const workHistory = createWorkHistorySection(template);
-    content.appendChild(workHistory);
+    infoList.appendChild(workHistory);
 
     // Add education section
     const education = createEducationSection();
-    content.appendChild(education);
+    infoList.appendChild(education);
 
-    // Add the content to the container
-    contentContainer.appendChild(content);
+    // Add the info list to the container
+    contentContainer.appendChild(infoList);
 }
 
 /**
@@ -483,47 +486,34 @@ function renderResumeContent(facetId, template) {
  * @returns {HTMLElement} The basic info section
  */
 function createBasicInfoSection() {
-    const section = document.createElement('section');
-    section.className = 'basic-info';
+    // Create a list item for the facet-info-list
+    const infoItem = document.createElement('li');
+    infoItem.className = 'info-item';
 
-    const heading = document.createElement('h3');
+    // Create a heading for the section
+    const heading = document.createElement('strong');
     heading.textContent = 'Personal Information';
-    section.appendChild(heading);
 
-    // Create a list for personal info items
-    const infoList = document.createElement('ul');
-    infoList.className = 'personal-info-list';
+    // Create a container for the personal info content
+    const infoContent = document.createElement('div');
+    infoContent.className = 'info-content';
 
     // Add contact information
-    const contactItem = document.createElement('li');
-    contactItem.className = 'info-item';
-    
-    const contactTitle = document.createElement('strong');
-    contactTitle.textContent = 'Contact Details';
-    
-    const contactDetails = document.createElement('span');
-    contactDetails.innerHTML = `: Email: ${resumeData.basics.email}, Phone: ${resumeData.basics.phone}, Location: ${resumeData.basics.location.city}, ${resumeData.basics.location.region}`;
-    
-    contactItem.appendChild(contactTitle);
-    contactItem.appendChild(contactDetails);
-    infoList.appendChild(contactItem);
+    const contactDetails = document.createElement('p');
+    contactDetails.innerHTML = `<strong>Contact:</strong> Email: ${resumeData.basics.email}, Phone: ${resumeData.basics.phone}, Location: ${resumeData.basics.location.city}, ${resumeData.basics.location.region}`;
+    infoContent.appendChild(contactDetails);
 
     // Add professional summary
-    const summaryItem = document.createElement('li');
-    summaryItem.className = 'info-item';
-    
-    const summaryTitle = document.createElement('strong');
-    summaryTitle.textContent = 'Professional Summary';
-    
-    const summaryContent = document.createElement('span');
-    summaryContent.textContent = `: ${resumeData.basics.summary}`;
-    
-    summaryItem.appendChild(summaryTitle);
-    summaryItem.appendChild(summaryContent);
-    infoList.appendChild(summaryItem);
+    const summaryContent = document.createElement('p');
+    summaryContent.innerHTML = `<strong>Professional Summary:</strong> ${resumeData.basics.summary}`;
+    infoContent.appendChild(summaryContent);
 
-    section.appendChild(infoList);
-    return section;
+    // Assemble the info item
+    infoItem.appendChild(heading);
+    infoItem.appendChild(document.createTextNode(': '));
+    infoItem.appendChild(infoContent);
+
+    return infoItem;
 }
 
 /**
@@ -531,32 +521,31 @@ function createBasicInfoSection() {
  * @returns {HTMLElement} The skills section
  */
 function createSkillsSection() {
-    const section = document.createElement('section');
-    section.className = 'skills';
+    // Create a list item for the facet-info-list
+    const infoItem = document.createElement('li');
+    infoItem.className = 'info-item';
 
-    const heading = document.createElement('h3');
+    // Create a heading for the section
+    const heading = document.createElement('strong');
     heading.textContent = 'Skills';
-    section.appendChild(heading);
 
-    const skillsList = document.createElement('ul');
+    // Create a container for the skills content
+    const skillsContent = document.createElement('div');
+    skillsContent.className = 'info-content';
 
+    // Add each skill group
     resumeData.skills.forEach(skill => {
-        const skillItem = document.createElement('li');
-
-        const skillName = document.createElement('strong');
-        skillName.textContent = skill.name;
-
-        const skillKeywords = document.createElement('span');
-        skillKeywords.textContent = `: ${skill.keywords.join(', ')}`;
-
-        skillItem.appendChild(skillName);
-        skillItem.appendChild(skillKeywords);
-        skillsList.appendChild(skillItem);
+        const skillGroup = document.createElement('p');
+        skillGroup.innerHTML = `<strong>${skill.name}:</strong> ${skill.keywords.join(', ')}`;
+        skillsContent.appendChild(skillGroup);
     });
 
-    section.appendChild(skillsList);
+    // Assemble the info item
+    infoItem.appendChild(heading);
+    infoItem.appendChild(document.createTextNode(': '));
+    infoItem.appendChild(skillsContent);
 
-    return section;
+    return infoItem;
 }
 
 /**
@@ -565,18 +554,25 @@ function createSkillsSection() {
  * @returns {HTMLElement} The work history section
  */
 function createWorkHistorySection(templateId) {
-    const section = document.createElement('section');
-    section.className = 'work-history';
+    // Create a list item for the facet-info-list
+    const infoItem = document.createElement('li');
+    infoItem.className = 'info-item';
 
-    const heading = document.createElement('h3');
+    // Create a heading for the section
+    const heading = document.createElement('strong');
     heading.textContent = 'Work Experience';
-    section.appendChild(heading);
+
+    // Create a container for the work history content
+    const workContent = document.createElement('div');
+    workContent.className = 'info-content';
 
     // Get template configuration
     const templateConfig = templatesData[templateId];
     if (!templateConfig) {
         console.error(`Template configuration not found for: ${templateId}`);
-        return section;
+        infoItem.appendChild(heading);
+        infoItem.appendChild(document.createTextNode(': No template configuration found'));
+        return infoItem;
     }
 
     // Filter work history based on template configuration
@@ -587,7 +583,7 @@ function createWorkHistorySection(templateId) {
     if (filters.yearsBack) {
         const cutoffDate = new Date();
         cutoffDate.setFullYear(cutoffDate.getFullYear() - filters.yearsBack);
-        
+
         workEntries = workEntries.filter(job => {
             const endDate = job.endDate ? new Date(job.endDate) : new Date();
             return endDate >= cutoffDate;
@@ -600,55 +596,49 @@ function createWorkHistorySection(templateId) {
         const summaryItems = resumeData.work.filter(job => job.isSummary);
         workEntries = [...new Set([...workEntries, ...summaryItems])];
     }
-    
+
     if (filters.excludeIsSummary) {
         workEntries = workEntries.filter(job => !job.isSummary);
     }
 
-    const workList = document.createElement('ul');
-
+    // Add each job
     workEntries.forEach(job => {
-        const jobItem = document.createElement('li');
-        jobItem.className = 'job';
+        const jobDiv = document.createElement('div');
+        jobDiv.className = 'job-item';
 
-        const jobHeader = document.createElement('div');
-        jobHeader.className = 'job-header';
-
-        const jobTitle = document.createElement('h4');
-        // Handle cases where position might not exist
+        // Job title and company
+        const jobTitle = document.createElement('p');
+        jobTitle.className = 'job-title';
         if (job.position) {
-            jobTitle.textContent = `${job.position} at ${job.name}`;
+            jobTitle.innerHTML = `<strong>${job.position} at ${job.name}</strong>`;
         } else {
-            jobTitle.textContent = job.name;
+            jobTitle.innerHTML = `<strong>${job.name}</strong>`;
         }
+        jobDiv.appendChild(jobTitle);
 
-        const jobPeriod = document.createElement('div');
-        jobPeriod.className = 'job-period';
-        jobPeriod.textContent = `${job.startDate} to ${job.endDate || 'Present'}`;
+        // Job period and location
+        const jobDetails = document.createElement('p');
+        jobDetails.className = 'job-details';
+        jobDetails.innerHTML = `${job.startDate} to ${job.endDate || 'Present'} | ${job.location}`;
+        jobDiv.appendChild(jobDetails);
 
-        const jobLocation = document.createElement('div');
-        jobLocation.className = 'job-location';
-        jobLocation.textContent = job.location;
-
+        // Job summary
         const jobSummary = document.createElement('p');
         jobSummary.className = 'job-summary';
         jobSummary.textContent = job.summary;
-
-        jobHeader.appendChild(jobTitle);
-        jobHeader.appendChild(jobPeriod);
-        jobHeader.appendChild(jobLocation);
-
-        jobItem.appendChild(jobHeader);
-        jobItem.appendChild(jobSummary);
+        jobDiv.appendChild(jobSummary);
 
         // Add highlights if available
         if (job.highlights && job.highlights.length > 0) {
-            const highlightsHeading = document.createElement('h5');
-            highlightsHeading.textContent = 'Highlights:';
-            jobItem.appendChild(highlightsHeading);
+            const highlightsDiv = document.createElement('div');
+            highlightsDiv.className = 'job-highlights';
+
+            const highlightsHeading = document.createElement('p');
+            highlightsHeading.innerHTML = '<strong>Highlights:</strong>';
+            highlightsDiv.appendChild(highlightsHeading);
 
             const highlightsList = document.createElement('ul');
-            highlightsList.className = 'highlights';
+            highlightsList.className = 'highlights-list';
 
             job.highlights.forEach(highlight => {
                 const highlightItem = document.createElement('li');
@@ -656,15 +646,26 @@ function createWorkHistorySection(templateId) {
                 highlightsList.appendChild(highlightItem);
             });
 
-            jobItem.appendChild(highlightsList);
+            highlightsDiv.appendChild(highlightsList);
+            jobDiv.appendChild(highlightsDiv);
         }
 
-        workList.appendChild(jobItem);
+        workContent.appendChild(jobDiv);
+
+        // Add a separator between jobs
+        if (workEntries.indexOf(job) < workEntries.length - 1) {
+            const separator = document.createElement('hr');
+            separator.className = 'job-separator';
+            workContent.appendChild(separator);
+        }
     });
 
-    section.appendChild(workList);
+    // Assemble the info item
+    infoItem.appendChild(heading);
+    infoItem.appendChild(document.createTextNode(': '));
+    infoItem.appendChild(workContent);
 
-    return section;
+    return infoItem;
 }
 
 /**
@@ -672,47 +673,58 @@ function createWorkHistorySection(templateId) {
  * @returns {HTMLElement} The education section
  */
 function createEducationSection() {
-    const section = document.createElement('section');
-    section.className = 'education';
+    // Create a list item for the facet-info-list
+    const infoItem = document.createElement('li');
+    infoItem.className = 'info-item';
 
-    const heading = document.createElement('h3');
+    // Create a heading for the section
+    const heading = document.createElement('strong');
     heading.textContent = 'Education';
-    section.appendChild(heading);
 
-    const educationList = document.createElement('ul');
+    // Create a container for the education content
+    const educationContent = document.createElement('div');
+    educationContent.className = 'info-content';
 
+    // Add each education entry
     resumeData.education.forEach(edu => {
-        const eduItem = document.createElement('li');
+        const eduDiv = document.createElement('div');
+        eduDiv.className = 'education-item';
 
-        const degree = document.createElement('div');
+        // Degree and area
+        const degree = document.createElement('p');
         degree.className = 'degree';
-        degree.innerHTML = `<strong>${edu.studyType}</strong> in ${edu.area}`;
+        degree.innerHTML = `<strong>${edu.studyType} in ${edu.area}</strong>`;
+        eduDiv.appendChild(degree);
 
-        const institution = document.createElement('div');
-        institution.className = 'institution';
-        institution.textContent = edu.institution;
+        // Institution and year
+        const details = document.createElement('p');
+        details.className = 'education-details';
+        details.innerHTML = `${edu.institution} | Completed: ${edu.endDate}`;
+        eduDiv.appendChild(details);
 
-        const year = document.createElement('div');
-        year.className = 'year';
-        year.textContent = `Completed: ${edu.endDate}`;
+        educationContent.appendChild(eduDiv);
 
-        eduItem.appendChild(degree);
-        eduItem.appendChild(institution);
-        eduItem.appendChild(year);
-
-        educationList.appendChild(eduItem);
+        // Add a separator between education entries
+        if (resumeData.education.indexOf(edu) < resumeData.education.length - 1) {
+            const separator = document.createElement('hr');
+            separator.className = 'education-separator';
+            educationContent.appendChild(separator);
+        }
     });
 
-    section.appendChild(educationList);
+    // Assemble the info item
+    infoItem.appendChild(heading);
+    infoItem.appendChild(document.createTextNode(': '));
+    infoItem.appendChild(educationContent);
 
-    return section;
+    return infoItem;
 }
 
 // Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Try to initialize normally first
     init();
-    
+
     // If content is still empty after a short delay, try rebuilding
     setTimeout(function() {
         if (contentSection.innerHTML.trim() === '') {
@@ -727,127 +739,127 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function rebuildContentArea() {
     console.log('Attempting to rebuild content area...');
-    
+
     // Check if we have the necessary data
     if (!resumeData) {
         console.error('Resume data not loaded');
         return;
     }
-    
+
     if (!facetsData) {
         console.error('Facets data not loaded');
         return;
     }
-    
+
     if (!templatesData) {
         console.error('Templates data not loaded');
         return;
     }
-    
+
     // Clear existing content
     contentSection.innerHTML = '';
-    
+
     console.log('Creating facet sections...');
-    
+
     // Create facet sections based on facetsData
-    facetsData.forEach((facet, index) => {
+    facetsData.forEach(facet => {
         // Create section element
         const section = document.createElement('section');
-        
+
         // Use the title as ID if targetSelector is missing
-        const targetId = facet.targetSelector ? 
-            facet.targetSelector.substring(1) : 
+        const targetId = facet.targetSelector ?
+            facet.targetSelector.substring(1) :
             facet.title.toLowerCase().replace(/\s+/g, '-');
-            
+
         section.id = targetId;
         section.className = 'facet-section';
-        
+
         // Make Overview active by default
         if (facet.title === "Overview") {
             section.classList.add('active');
             currentFacet = `#${targetId}`;
         }
-        
+
         // Create heading
         const heading = document.createElement('h2');
         heading.textContent = facet.title;
         section.appendChild(heading);
-        
+
         // Create facet info list
         const facetList = document.createElement('ul');
         facetList.className = 'facet-info-list';
-        
+
         // Add objective if available
         if (facet.objective) {
             const objectiveItem = document.createElement('li');
             objectiveItem.className = 'info-item';
-            
+
             const objectiveTitle = document.createElement('strong');
             objectiveTitle.textContent = 'Career Objective';
-            
+
             const objectiveText = document.createElement('span');
             objectiveText.textContent = `: ${facet.objective}`;
-            
+
             objectiveItem.appendChild(objectiveTitle);
             objectiveItem.appendChild(objectiveText);
             facetList.appendChild(objectiveItem);
         }
-        
+
         // Add description if available
         if (facet.description) {
             const descriptionItem = document.createElement('li');
             descriptionItem.className = 'info-item';
-            
+
             const descriptionTitle = document.createElement('strong');
             descriptionTitle.textContent = 'Industry Impact';
-            
+
             const descriptionText = document.createElement('span');
             descriptionText.textContent = `: ${facet.description}`;
-            
+
             descriptionItem.appendChild(descriptionTitle);
             descriptionItem.appendChild(descriptionText);
             facetList.appendChild(descriptionItem);
         }
-        
+
         // Add my experience if available
         if (facet.myRole) {
             const experienceItem = document.createElement('li');
             experienceItem.className = 'info-item';
-            
+
             const experienceTitle = document.createElement('strong');
             experienceTitle.textContent = 'My Experience';
-            
+
             const experienceText = document.createElement('span');
             experienceText.textContent = `: ${facet.myRole}`;
-            
+
             experienceItem.appendChild(experienceTitle);
             experienceItem.appendChild(experienceText);
             facetList.appendChild(experienceItem);
         }
-        
+
         section.appendChild(facetList);
-        
+
         // Add resume content container
         const resumeContent = document.createElement('div');
         resumeContent.className = 'resume-content';
         section.appendChild(resumeContent);
-        
+
         contentSection.appendChild(section);
     });
-    
+
     // Render resume content for the active facet
     if (currentFacet) {
         renderResumeContent(currentFacet, currentTemplate);
     }
-    
+
     // Rebuild hero section
     generateHeroSection();
-    
+
     // Rebuild template selector
     populateTemplateSelector();
-    
+
     // Set up event listeners again
     setupEventListeners();
-    
+
     console.log('Content area rebuilt successfully');
 }

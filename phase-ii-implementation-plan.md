@@ -20,27 +20,27 @@
 
 ## 4. Footer Enhancements
 
-  [ ] Move JSON download and print buttons into a responsive flex row.
-  [ ] Add inline SVG icons for GitHub, LinkedIn, and email in `/assets/icons/`.
-  [ ] Apply alternate surface background color and consistent padding.
+  [x] Move JSON download and print buttons into a responsive flex row.
+  [x] Add inline SVG icons for GitHub, LinkedIn, and email in `/assets/icons/`.
+  [x] Apply alternate surface background color and consistent padding.
 
 ## 5. Dark Mode & Theming
 
-  [ ] Add `@media (prefers-color-scheme: dark)` token overrides for colors.
-  [ ] Provide manual dark‑mode toggle that sets `data-theme` attribute on `<html>`.
-  [ ] Persist theme preference in `localStorage`.
+  [x] Add `@media (prefers-color-scheme: dark)` token overrides for colors.
+  [x] Provide manual dark‑mode toggle that sets `data-theme` attribute on `<html>`.
+  [x] Persist theme preference in `localStorage`.
 
 ## 6. Iconography & Imagery
 
-  [ ] Replace PNG icons with MIT‑licensed **Heroicons** inline SVGs.
-  [ ] Add decorative background SVG wave or gradient mask to hero section.
-  [ ] Introduce optional <30 KB **Lottie** animation beside name tag.
+  [x] Replace PNG icons with MIT‑licensed **Heroicons** inline SVGs.
+  [x] Add decorative background SVG wave or gradient mask to hero section.
+  [x] Introduce optional <30 KB **Lottie** animation beside name tag.
 
 ## 7. Typography & Performance
 
-  [ ] Set base line‑height to 1.6 and establish heading scale (`--step--1` … `--step‑4`).
-  [ ] Run `npm run build` size report; target < 150 KB total CSS/JS (gzip).
-  [ ] Lazy‑load non‑critical assets with `loading="lazy"` / `fetchpriority="low"`.
+  [x] Set base line‑height to 1.6 and establish heading scale (`--step--1` … `--step‑4`).
+  [x] Run `npm run build` size report; target < 150 KB total CSS/JS (gzip).
+  [x] Lazy‑load non‑critical assets with `loading="lazy"` / `fetchpriority="low"`.
 
 ## 8. Accessibility & QA
 

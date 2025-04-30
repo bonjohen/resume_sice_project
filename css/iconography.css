@@ -1,0 +1,57 @@
+/*
+ * Iconography and Imagery Styles
+ * Phase II Implementation
+ */
+
+/* Hero section background */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/wave-bg.svg');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+/* Icon styles for facet navigation */
+.facets .icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: var(--space-2);
+}
+
+.facets .icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+/* Lottie animation container */
+.lottie-container {
+  width: 80px;
+  height: 80px;
+  margin-left: var(--space-2);
+}
+
+/* Dark mode adjustments for SVG icons */
+:root[data-theme="dark"] .hero::before,
+@media (prefers-color-scheme: dark) .hero:not([data-theme="light"])::before {
+  opacity: 0.3;
+}
+
+:root[data-theme="dark"] .facets .icon svg,
+@media (prefers-color-scheme: dark) .facets .icon svg:not([data-theme="light"]) {
+  stroke: currentColor;
+}
