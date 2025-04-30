@@ -117,10 +117,15 @@
   color: white;
 }
 
+:root[data-theme="dark"] .hero-wrapper,
+@media (prefers-color-scheme: dark) .hero-wrapper:not([data-theme="light"]) {
+  background-color: var(--surface);
+  border-bottom-color: var(--border);
+}
+
 :root[data-theme="dark"] .hero,
 @media (prefers-color-scheme: dark) .hero:not([data-theme="light"]) {
   background-color: var(--surface);
-  border-bottom-color: var(--border);
 }
 
 :root[data-theme="dark"] .objective,

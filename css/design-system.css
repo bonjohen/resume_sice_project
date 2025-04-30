@@ -42,10 +42,10 @@
   --font-size-h4: var(--step--1);
 
   /* Hero section */
-  --font-size-hero-title: var(--step-2);
-  --font-size-hero-tagline: var(--step-3);
-  --font-size-hero-shrink-title: var(--step-3);
-  --font-size-hero-shrink-tagline: var(--step-1);
+  --font-size-hero-title: var(--step-4);       /* Increased from --step--1 to --step-4 */
+  --font-size-hero-tagline: var(--step-2);     /* Adjusted to be smaller than the title */
+  --font-size-hero-shrink-title: var(--step-1); /* Slightly smaller when header shrinks */
+  --font-size-hero-shrink-tagline: var(--step-1); /* Smaller tagline when header shrinks */
 
   /* Facet sections */
   --font-size-facet-heading: var(--step-0);
@@ -82,6 +82,14 @@
   /* Font families */
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
+
+  /* Facet-specific accent colors */
+  --accent-data-engineering: #3498db;      /* Blue */
+  --accent-software-development: #2ecc71;  /* Green */
+  --accent-process-improvement: #e74c3c;   /* Red */
+  --accent-ai-engineering: #9b59b6;        /* Purple */
+  --accent-leadership-mentorship: #f39c12; /* Orange */
+  --accent-overview: #34495e;              /* Dark blue */
 }
 
 /* Google Fonts Import */
@@ -101,3 +109,5 @@
 .bg-surface-alt {
   background-color: var(--surface-alt);
 }
+
+

@@ -3,18 +3,24 @@
  * Phase II Implementation
  */
 
-/* Sticky Header */
-.hero {
+/* Sticky Header Wrapper */
+.hero-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
   background-color: var(--surface);
-  transition: all 0.3s ease;
-  padding: var(--space-4) var(--space-3);
   border-bottom: 1px solid var(--border);
   width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Sticky Header Content */
+.hero {
+  transition: all 0.3s ease;
+  padding: var(--space-4) var(--space-3);
   max-width: 1280px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -23,44 +29,47 @@
 
 /* Add padding to body to account for fixed header */
 body {
-  padding-top: 120px; /* Reduced from 180px to better match header height */
+  padding-top: 180px; /* Increased to ensure content is not covered by header */
 }
 
-/* Hero content styling */
-.hero-content {
-  margin-bottom: var(--space-2);
-}
-
-.hero h1 {
+/* Hero content styling - Increased specificity */
+.hero .hero-content h1 {
   font-size: var(--font-size-hero-title);
   margin-bottom: var(--space-1);
   color: var(--text-heading);
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold, 700);
 }
 
-.hero .tagline {
+.hero .hero-content .tagline {
   font-size: var(--font-size-hero-tagline);
   color: var(--text-muted);
   margin-bottom: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-normal, 400);
 }
 
 /* Shrink header on scroll */
-.hero.shrink {
-  padding: var(--space-2) var(--space-3);
+.hero-wrapper.shrink {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.hero.shrink h1 {
+.hero-wrapper.shrink .hero {
+  padding: var(--space-2) var(--space-3);
+}
+
+.hero-wrapper.shrink h1 {
   font-size: var(--font-size-hero-shrink-title);
   margin-bottom: var(--space-1);
 }
 
-.hero.shrink .tagline {
+.hero-wrapper.shrink .tagline {
   font-size: var(--font-size-hero-shrink-tagline);
   margin-bottom: var(--space-1);
   opacity: 0.8;
 }
 
-.hero.shrink .facets ul {
+.hero-wrapper.shrink .facets ul {
   margin: var(--space-1) 0;
 }
 
@@ -111,11 +120,24 @@ body {
 
 /* Set scroll-margin-top for section headings */
 .facet-section h2 {
-  scroll-margin-top: 80px; /* Adjust based on header height */
+  scroll-margin-top: 200px; /* Increased to ensure headings are not hidden under the header */
 }
 
 /* Responsive header adjustments */
 @media (max-width: 768px) {
+  .hero-wrapper {
+    width: 100%;
+  }
+
+  .hero {
+    width: 100%;
+    padding: var(--space-3) var(--space-2);
+  }
+
+  body {
+    padding-top: 220px; /* Increased for mobile to ensure content is not covered */
+  }
+
   .hero h1 {
     font-size: var(--font-size-h2);
   }
@@ -128,11 +150,19 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    gap: var(--space-1);
   }
 
   .facets li a {
     width: auto;
     justify-content: center;
+    padding: var(--space-1) var(--space-2);
+  }
+
+  /* Smaller scroll margin on mobile */
+  .facet-section h2 {
+    scroll-margin-top: 150px;
   }
 }
+
 

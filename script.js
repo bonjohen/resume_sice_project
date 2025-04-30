@@ -335,16 +335,16 @@ function setupEventListeners() {
  */
 function handleFacetClick(event) {
     event.preventDefault();
-
+    
     // Get the target section ID from the href attribute
     const targetSelector = event.currentTarget.getAttribute('href');
     console.log('Facet clicked:', targetSelector);
-
+    
     if (!targetSelector) {
         console.error('No target selector found in href attribute');
         return;
     }
-
+    
     // Remove the # from the beginning of the selector
     const targetId = targetSelector.substring(1);
     const targetSection = document.getElementById(targetId);
@@ -369,11 +369,20 @@ function handleFacetClick(event) {
 
     // Show the target section
     targetSection.classList.add('active');
+    
+    // Update the document title to reflect the current facet
+    const facetTitle = event.currentTarget.textContent.trim();
+    document.title = `${resumeData.basics.name} - ${facetTitle}`;
+    
+    // Add a class to the body to allow for facet-specific styling
+    document.body.className = ''; // Clear existing classes
+    document.body.classList.add(`facet-${targetId}`);
+    
     currentFacet = targetSelector;
 
     // Render resume content for this facet with current template
     renderResumeContent(currentFacet, currentTemplate);
-
+    
     console.log('Navigation complete, current facet:', currentFacet);
 }
 
