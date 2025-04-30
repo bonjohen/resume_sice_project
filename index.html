@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional resume">
+    <title>Resume</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Section - Will be populated from JSON -->
+    <header class="hero" id="hero-section">
+        <!-- Content will be dynamically inserted here -->
+    </header>
+
+    <div class="template-selector">
+        <label for="template-select">Template:</label>
+        <select id="template-select">
+            <option value="basic">Basic Résumé</option>
+            <option value="current-focus">Current-Focus Résumé</option>
+        </select>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="content">
+        <!-- Facet sections will be dynamically generated here -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="controls">
+            <button id="download-json" class="btn">Download Raw JSON</button>
+            <button id="download-filtered-json" class="btn">Download Filtered JSON</button>
+            <button id="print-btn" class="btn">Print</button>
+        </div>
+     </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

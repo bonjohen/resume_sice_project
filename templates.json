@@ -1,0 +1,34 @@
+{
+  "basic": {
+    "id": "basic",
+    "label": "Basic Résumé",
+    "description": "Shows full biography, education, and every employment record.",
+    "filters": {
+      "work": {
+        "excludeIsSummary": true,
+        "yearsBack": null
+      }
+    },
+    "display": {
+      "showHighlights": true,
+      "showProjects": true,
+      "showAllSkills": true
+    }
+  },
+  "current-focus": {
+    "id": "current-focus",
+    "label": "Current-Focus Résumé",
+    "description": "Shows full biography, education, the ten year work history, plus a skills summary of earlier years.",
+    "filters": {
+      "work": {
+        "includeIsSummary": true,
+        "yearsBack": 10
+      }
+    },
+    "display": {
+      "showHighlights": true,
+      "showProjects": true,
+      "showAllSkills": false
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "specName": "Phase-I Data Definition",
+    "version": "1.1.0",
+    "generated": "2025-04-29"
+  },
+  "site": {
+    "hero": {
+      "nameSelector": "header.hero h1",
+      "taglineSelector": "header.hero .tagline",
+      "pillContainerSelector": "header.hero nav.facets"
+    },
+    "contentAreaSelector": "#content",
+    "downloadLinkSelector": "footer #download-json",
+    "printButtonSelector": "footer #print-btn",
+    "scrollBehavior": "smooth",
+    "scrollMethod": "scrollIntoView"
+  },
+  "facets": [
+    {
+      "id": 1,
+      "label": "Data Engineering",
+      "targetSelector": "#facet-1",
+      "objectiveKey": "/facets[0]/employment_objective",
+      "displayOrder": 1,
+      "icon": "database",
+      "ariaLabel": "View Data Engineering objective"
+    },
+    {
+      "id": 2,
+      "label": "Software Development",
+      "targetSelector": "#facet-2",
+      "objectiveKey": "/facets[1]/employment_objective",
+      "displayOrder": 2,
+      "icon": "code",
+      "ariaLabel": "View Software Development objective"
+    },
+    {
+      "id": 3,
+      "label": "Process Improvement",
+      "targetSelector": "#facet-3",
+      "objectiveKey": "/facets[2]/employment_objective",
+      "displayOrder": 3,
+      "icon": "workflow",
+      "ariaLabel": "View Process Improvement objective"
+    },
+    {
+      "id": 4,
+      "label": "AI Engineering",
+      "targetSelector": "#facet-4",
+      "objectiveKey": "/facets[3]/employment_objective",
+      "displayOrder": 4,
+      "icon": "circuit-board",
+      "ariaLabel": "View AI Engineering objective"
+    },
+    {
+      "id": 5,
+      "label": "Leadership & Mentorship",
+      "targetSelector": "#facet-5",
+      "objectiveKey": "/facets[4]/employment_objective",
+      "displayOrder": 5,
+      "icon": "users",
+      "ariaLabel": "View Leadership & Mentorship objective"
+    }
+  ],
+  "templates": [
+    {
+      "id": "basic",
+      "label": "Basic R\u00e9sum\u00e9",
+      "description": "Shows full biography, education, and every employment record.",
+      "yearsBack": null
+    },
+    {
+      "id": "current-focus",
+      "label": "Current-Focus R\u00e9sum\u00e9",
+      "description": "Highlights ten year work history plus a skills summary of earlier years.",
+      "yearsBack": 10
+    }
+  ],
+  "validators": {
+    "resume": "resume-cli",
+    "jsonLd": "Schema Markup Validator",
+    "robots": "TechnicalSEO robots.txt Tester"
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.2.1/schema.json",
+  "basics": {
+    "name": "John Boen",
+    "label": "Senior Database & AI Engineer",
+    "email": "Boen38@gmail.com",
+    "phone": "425-830-1802",
+    "location": {
+      "address": "3211 115th Ave NE #265",
+      "postalCode": "98004",
+      "city": "Bellevue",
+      "region": "WA",
+      "country": "USA"
+    },
+    "summary": "Seasoned senior data engineer with 25+ years of experience designing and implementing client-server applications and reporting systems. Strong grounding in Agile/Scrum/6 Sigma. Passionate lifelong learner and mentor. Current learning focus is on Large Language Models and agentic software."
+  },
+
+  "skills": [
+    {
+      "name": "Database Engineering",
+      "level": "expert",
+      "keywords": ["Database", "Data Modeling", "Performance Tuning", "ETL"]
+    },
+    {
+      "name": "Data Science & Analytics",
+      "level": "intermediate/advanced",
+      "keywords": ["Statistical Analysis", "Reporting", "Visualization"]
+    },
+    {
+      "name": "Methodologies",
+      "level": "advanced",
+      "keywords": ["Agile", "Scrum", "Six Sigma", "CQI", "TQM"]
+    },
+    {
+      "name": "Dev & Ops",
+      "level": "advanced",
+      "keywords": [
+        "Source Control Integration",
+        "Multi-environment Deployment",
+        "Incident Triage",
+        "Production Support"
+      ]
+    },
+    {
+      "name": "Artificial Intelligence (current focus)",
+      "level": "intermediate",
+      "keywords": [
+        "Large Language Models",
+        "Open and closed source LLMs",
+        "Prompt Engineering",
+        "Agentic Software",
+        "Agentic Design"
+      ]
+    }
+  ],
+
+  "work": [
+    {
+      "name": "Google (Google Core ML) (Contingent Staff: Artech LLC)",
+      "location": "Remote / Seattle WA",
+      "position": "Data Engineer",
+      "startDate": "2022-07",
+      "endDate": "2023-12",
+      "summary": "Created and modified data workflows, built reporting on new datasets, and introduced a disciplined software-lifecycle approach for Google’s Core ML analytics.",
+      "highlights": [
+        "Consolidated dozens of ad-hoc data/reporting jobs into a version-controlled, multi-environment pipeline with dependency management, retry logic, and alerting.",
+        "Performed large-scale statistical analyses (e.g., Inter-Rater Reliability, skew assessments) to identify similarity clusters across data cohorts."
+      ],
+      "projects": [
+        "Rater Reliability Analysis: Built statistical models to evaluate consistency across human evaluators",
+        "Automated Alerting System: Created a comprehensive monitoring system for data quality issues",
+        "SDLC: Implemented a multi-environment pipeline for data processing and reporting"
+      ]
+    },
+    {
+      "name": "Virtuoso Inc.",
+      "location": "Seattle, WA",
+      "position": "Senior Database Engineer",
+      "startDate": "2014-09",
+      "endDate": "2020-02",
+      "summary": "Implemented new data/reporting solutions and provided rapid triage for critical data corrections within global travel systems.",
+      "highlights": [
+        "Designed stored-procedure interfaces and analytics for luxury-travel booking platforms.",
+        "Led emergency data-repair efforts that restored production accuracy within hours."
+      ]
+    },
+    {
+      "name": "Prior Experience Summary (Pre-2015)",
+      "location": "Seattle, WA",
+      "startDate": "1991-10",
+      "endDate": "2014-09",
+      "isSummary": true,
+      "summary": "Prior Experience Summary (Pre-2015): My early career spans two decades across prominent organizations including Microsoft (1996-2004), Getty Images (2004-2007), Ripl Corp (2007-2008), Virtuoso (2008-2009), and Demand Media (2009-2014), with foundational roles at Boeing (1991-1995). Throughout these positions, I developed expertise in data warehousing, database application design, predictive analytics infrastructure, enterprise system scalability, and fault-tolerant data systems. I consistently delivered robust solutions for high-profile platforms including WindowsMedia.com, MSN, Xbox, global imagery catalogs, and Internet domain registries, while advancing from individual contributor to leadership roles and mentoring technical teams."
+    },
+    {
+      "name": "Demand Media",
+      "location": "Bellevue, WA",
+      "position": "Software Engineer",
+      "startDate": "2009-07",
+      "endDate": "2014-09",
+      "summary": "Built the data-infrastructure layer for a fault-tolerant Internet registry managing millions of domains."
+    },
+    {
+      "name": "Virtuoso Inc. (Contingent Staff: Self-employed)",
+      "location": "Seattle, WA",
+      "position": "Senior Software Engineer",
+      "startDate": "2008-11",
+      "endDate": "2009-04",
+      "summary": "Redesigned cruise-market subsystems during enterprise consolidation, improving scalability and feature velocity."
+    },
+    {
+      "name": "Ripl Corp",
+      "location": "Seattle, WA",
+      "position": "Senior Software Engineer",
+      "startDate": "2007-08",
+      "endDate": "2008-10",
+      "summary": "Created data infrastructure enabling predictive analytics for early-stage social-media trend detection."
+    },
+    {
+      "name": "Getty Images",
+      "location": "Seattle, WA",
+      "position": "Senior Software Engineer",
+      "startDate": "2004-11",
+      "endDate": "2007-08",
+      "summary": "Designed database applications that powered sales and marketing analytics across global imagery catalogs."
+    },
+    {
+      "name": "Microsoft Corporation",
+      "location": "Redmond, WA",
+      "position": "Software Development Engineer → Database Engineer → Manager",
+      "startDate": "1996-09",
+      "endDate": "2004-11",
+      "summary": "Drove large-scale projects using pre-release Microsoft technologies; built data warehouses for WindowsMedia.com, MSN, Xbox, and subscription services.",
+      "highlights": [
+        "Pioneered reporting environments that became blueprints for later Microsoft web properties."
+      ]
+    },
+    {
+      "name": "Microsoft IT (Contingent Staff: Volt Computer contracts)",
+      "location": "Redmond, WA",
+      "position": "Application Developer",
+      "startDate": "1995-03",
+      "endDate": "1996-09",
+      "summary": "Developed and supported internal LOB applications (patent tracking, HR, finance) for Microsoft."
+    },
+    {
+      "name": "Boeing Commercial Airplanes",
+      "location": "Seattle, WA",
+      "position": "Engineer",
+      "startDate": "1991-10",
+      "endDate": "1995-03",
+      "summary": "Managed change-management and design-coordination processes; built decision-support and workflow tools for aircraft programs."
+    }
+  ],
+
+  "education": [
+    {
+      "institution": "Washington State University",
+      "area": "Materials Science & Engineering",
+      "studyType": "Bachelor of Science",
+      "endDate": "1990"
+    },
+    {
+      "institution": "Walla Walla Community College",
+      "area": "General Studies",
+      "studyType": "Associate of Arts",
+      "endDate": "1987"
+    }
+  ],
+
+  "interests": [
+    {
+      "name": "Maker Culture",
+      "keywords": [
+        "DIY Projects",
+        "CNC Machining",
+        "3D Printing",
+        "Digital Electronics",
+        "Woodworking"
+      ]
+    },
+    {
+      "name": "Fitness",
+      "keywords": [
+        "Filipino Martial Arts",
+        "Weapon Training",
+        "Mobility Work",
+        "Injury Prevention"
+      ]
+    },
+    {
+      "name": "Artificial Intelligence",
+      "keywords": [
+        "Large Language Models",
+        "Open and closed source LLMs",
+        "Prompt Engineering",
+        "Agentic Software"
+      ]
+    }
+  ],
+
+  "references": [
+    {
+      "name": "Professional references",
+      "reference": "Available upon request"
+    }
+  ],
+
+  "meta": {
+    "theme": "elegant",
+    "lastModified": "2023-11-15T12:30:00Z",
+    "version": "v1.0.0"
+  }
+}

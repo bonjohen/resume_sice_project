@@ -1,0 +1,21 @@
+Phase I – Initial Release Scope and Specifications
+
+1 Purpose
+Deliver a static résumé website with a polished landing page, basic facet navigation, and core résumé utilities (view, download, print).
+
+2 Functional Scope
+• Landing page hero with name, tagline, and five facet pills.
+• Pill click scrolls to placeholder section showing objective text.
+• Résumé view renders bio, education, summarized work.
+• Download link returns resume.json.
+• Print button invokes window.print(); print CSS hides navigation.
+• Two templates: Basic and Current‑Focus.
+• JSON-LD embedded; resume.json duplicated at /.well-known/resume.json.
+
+3 Technical Specs
+Hosting with GitHub Pages; domain via GoDaddy.
+Directory: index.html, style.css, script.js, resume.json, facet.json, /.well-known/resume.json, robots.txt, templates/, assets/.
+Local dev via Vite server.
+
+4 Data Required
+resume.json, facet.json, JSON-LD, robots.txt, /.well-known/resume.json.

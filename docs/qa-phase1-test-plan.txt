@@ -1,0 +1,17 @@
+Phase I QA Test Plan — Page Behavior Smoke Suite
+
+Data Source: docs/test_metadata.json.
+
+Automated Tests
+1. HTTP 200 and title check.
+2. Hero elements present.
+3. Pill navigation scrolls and objective visible for each pill.
+4. resume.json fetched and DOM shows bio, education, work.
+5. Template selector toggles between templates.
+6. Download link attributes correct.
+7. window.print() executes without exception.
+
+Manual Checks
+A. Smooth scroll lands correctly.
+B. No horizontal scroll on 320px, 768px, 1280px widths.
+C. Print preview hides hero/navigation and paginates résumé content.

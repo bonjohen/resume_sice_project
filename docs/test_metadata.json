@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "label": "Data Engineering",
+    "targetSelector": "#facet-1"
+  },
+  {
+    "id": 2,
+    "label": "Software Development",
+    "targetSelector": "#facet-2"
+  },
+  {
+    "id": 3,
+    "label": "Process Improvement",
+    "targetSelector": "#facet-3"
+  },
+  {
+    "id": 4,
+    "label": "AI Engineering",
+    "targetSelector": "#facet-4"
+  },
+
+  {
+    "id": 5,
+    "label": "Leadership & Mentorship",
+    "targetSelector": "#facet-5"
+  }
+]

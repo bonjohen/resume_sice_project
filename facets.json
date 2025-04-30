@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Data Engineering",
+    "icon": "database",
+    "targetSelector": "#data-engineering",
+    "objective": "Seeking a role where I can leverage my extensive database engineering experience to design and implement efficient data solutions that drive business insights and decision-making.",
+    "description": "Data Engineering is the foundation of modern data-driven organizations, enabling efficient collection, transformation, and storage of data for analysis and decision-making.",
+    "myRole": "With over 25 years of experience designing and implementing database solutions across various industries, I've developed expertise in optimizing data pipelines and creating scalable data architectures."
+  },
+  {
+    "title": "Software Development",
+    "icon": "code",
+    "targetSelector": "#software-development",
+    "objective": "Looking for opportunities to apply my software development skills to create robust, scalable applications that solve complex business problems.",
+    "description": "Software Development is essential for creating the tools and applications that power modern businesses and enable digital transformation.",
+    "myRole": "I've built and maintained many applications using various programming languages and frameworks, focusing on clean code, maintainability, and performance optimization."
+  },
+  {
+    "title": "Process Improvement",
+    "icon": "workflow",
+    "targetSelector": "#process-improvement",
+    "objective": "Interested in positions where I can utilize my process improvement expertise to optimize workflows, increase efficiency, and drive organizational excellence.",
+    "description": "Process Improvement methodologies like Six Sigma and Agile are critical for organizations seeking to eliminate waste, reduce costs, and enhance quality across all business operations.",
+    "myRole": "I've led multiple process improvement initiatives that resulted in significant cost savings, reduced cycle times, and improved customer satisfaction through systematic analysis and implementation of optimized workflows."
+  },
+  {
+    "title": "AI Engineering",
+    "icon": "circuit-board",
+    "targetSelector": "#ai-engineering",
+    "objective": "Eager to contribute to projects involving artificial intelligence, particularly in the development of large language models and agentic software solutions.",
+    "description": "Artificial Intelligence is transforming industries by automating complex tasks, generating insights from vast datasets, and creating new possibilities for human-computer interaction.",
+    "myRole": "I've developed expertise in prompt engineering, fine-tuning large language models, and designing agentic systems that can autonomously solve complex problems while maintaining alignment with human values."
+  },
+  {
+    "title": "Leadership & Mentorship",
+    "icon": "users",
+    "targetSelector": "#leadership-mentorship",
+    "objective": "Seeking leadership roles where I can mentor teams, foster professional growth, and guide technical initiatives to successful completion.",
+    "description": "Effective technical leadership is crucial in today's complex technology landscape. It bridges the gap between business vision and technical execution, empowering teams to deliver innovative solutions while developing the next generation of technical talent.",
+    "myRole": "I've successfully led cross-functional teams through challenging projects, mentored junior developers into senior roles, and created collaborative environments where innovation thrives."
+  },
+  {
+    "title": "Overview",
+    "icon": "user",
+    "targetSelector": "#overview",
+    "objective": "Seasoned senior data engineer with 25+ years of experience designing and implementing client-server applications and reporting systems.",
+    "description": "A comprehensive view of my professional experience, skills, and education across all domains.",
+    "myRole": "I combine expertise in multiple technical disciplines with leadership skills to deliver high-quality solutions that meet business needs."
+  }
+]
