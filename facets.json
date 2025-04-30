@@ -25,7 +25,7 @@
   },
   {
     "title": "AI Engineering",
-    "icon": "circuit-board",
+    "icon": "ai",
     "targetSelector": "#ai-engineering",
     "objective": "Eager to contribute to projects involving artificial intelligence, particularly in the development of large language models and agentic software solutions.",
     "description": "Artificial Intelligence is transforming industries by automating complex tasks, generating insights from vast datasets, and creating new possibilities for human-computer interaction.",

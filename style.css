@@ -18,6 +18,7 @@ body {
     min-width: 400px;
     margin: 0 auto;
     padding: 1rem;
+    padding-top: 180px; /* Space for fixed header */
     background-color: var(--surface, #ffffff);
 }
 
@@ -161,7 +162,7 @@ select {
     background-image: url('assets/icons/workflow.svg');
 }
 
-.icon.circuit-board {
+.icon.ai {
     background-image: url('assets/icons/ai.svg');
 }
 
@@ -219,15 +220,7 @@ footer {
     gap: 1rem;
 }
 
-.template-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    max-width: 1280px;
-    min-width: 400px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
+/* Template selector styles moved to tooltip.css */
 
 /* Responsive Design */
 @media (max-width: 768px) {

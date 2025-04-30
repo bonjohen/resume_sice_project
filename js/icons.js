@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'cloud': 'assets/icons/cloud.svg',
     'users': 'assets/icons/users.svg',
     'workflow': 'assets/icons/workflow.svg',
-    'circuit-board': 'assets/icons/ai.svg'
+    'ai': 'assets/icons/ai.svg'
   };
 
   // Find all icon elements

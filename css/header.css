@@ -5,13 +5,42 @@
 
 /* Sticky Header */
 .hero {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   background-color: var(--surface);
   transition: all 0.3s ease;
   padding: var(--space-4) var(--space-3);
   border-bottom: 1px solid var(--border);
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Add padding to body to account for fixed header */
+body {
+  padding-top: 180px; /* Adjust based on your header height */
+}
+
+/* Hero content styling */
+.hero-content {
+  margin-bottom: var(--space-2);
+}
+
+.hero h1 {
+  font-size: var(--step-3);
+  margin-bottom: var(--space-1);
+  color: var(--text-heading);
+}
+
+.hero .tagline {
+  font-size: var(--step-1);
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
 }
 
 /* Shrink header on scroll */
@@ -21,16 +50,28 @@
 }
 
 .hero.shrink h1 {
-  font-size: var(--step-2);
+  font-size: var(--step-1);
+  margin-bottom: var(--space-1);
 }
 
 .hero.shrink .tagline {
   font-size: var(--step--1);
+  margin-bottom: var(--space-1);
+}
+
+.hero.shrink .facets ul {
+  margin: var(--space-1) 0;
 }
 
 /* Navigation Pills */
 .facets ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
   margin: var(--space-2) 0;
+  justify-content: center;
 }
 
 .facets a {
@@ -56,7 +97,40 @@
   color: white;
 }
 
+/* Icon styles */
+.facets .icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: var(--space-2);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 /* Set scroll-margin-top for section headings */
 .facet-section h2 {
   scroll-margin-top: 80px; /* Adjust based on header height */
+}
+
+/* Responsive header adjustments */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: var(--step-2);
+  }
+
+  .hero .tagline {
+    font-size: var(--step-0);
+  }
+
+  .facets ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .facets li a {
+    width: auto;
+    justify-content: center;
+  }
 }

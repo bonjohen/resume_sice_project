@@ -3,10 +3,34 @@
  * Phase II Implementation
  */
 
+/* Facet info list */
+.facet-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.facet-info-list .info-item {
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.facet-info-list .info-item strong {
+  font-size: var(--step-1);
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+.facet-info-list .info-item:last-child {
+  border-bottom: none;
+}
+
 /* Info content container */
 .info-content {
   margin-top: var(--space-2);
   margin-bottom: var(--space-3);
+  font-size: var(--step--1);
 }
 
 /* Job items */
@@ -14,9 +38,30 @@
   margin-bottom: var(--space-3);
 }
 
-.job-title {
-  font-size: var(--step-1);
+.job-header {
+  display: flex;
+  align-items: center;
   margin-bottom: var(--space-1);
+}
+
+.company-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--brand);
+}
+
+.job-title {
+  font-size: var(--step--1);
+  margin-bottom: 0;
   color: var(--text-heading);
 }
 
@@ -32,11 +77,13 @@
 
 .job-highlights {
   margin-top: var(--space-2);
+  font-size: var(--step--1);
 }
 
 .highlights-list {
   margin-left: var(--space-4);
   margin-top: var(--space-1);
+  font-size: var(--step--1);
 }
 
 .highlights-list li {
@@ -54,10 +101,32 @@
   margin-bottom: var(--space-3);
 }
 
-.degree {
-  font-size: var(--step-0);
+.education-header {
+  display: flex;
+  align-items: center;
   margin-bottom: var(--space-1);
+}
+
+.institution-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.institution-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--brand);
+}
+
+.degree {
+  font-size: var(--step--1);
+  margin-bottom: 0;
   color: var(--text-heading);
+  font-weight: normal;
 }
 
 .education-details {

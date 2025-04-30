@@ -50,7 +50,7 @@
       "targetSelector": "#facet-4",
       "objectiveKey": "/facets[3]/employment_objective",
       "displayOrder": 4,
-      "icon": "circuit-board",
+      "icon": "ai",
       "ariaLabel": "View AI Engineering objective"
     },
     {

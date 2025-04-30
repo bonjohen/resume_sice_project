@@ -125,12 +125,48 @@ function populateTemplateSelector() {
         const option = document.createElement('option');
         option.value = template.id;
         option.textContent = template.label;
-        option.title = template.description;
+        option.title = template.description; // This adds the hover text
+        option.setAttribute('data-description', template.description); // Additional attribute for custom tooltip
         templateSelector.appendChild(option);
     });
 
     // Set the default template
     templateSelector.value = currentTemplate;
+
+    // Create a custom tooltip element for better hover experience
+    const tooltip = document.createElement('div');
+    tooltip.className = 'template-tooltip';
+    tooltip.style.display = 'none';
+    document.body.appendChild(tooltip);
+
+    // Add event listeners for custom tooltip
+    templateSelector.addEventListener('mouseover', function(e) {
+        if (e.target.tagName === 'OPTION') {
+            const description = e.target.getAttribute('data-description');
+            if (description) {
+                tooltip.textContent = description;
+                tooltip.style.display = 'block';
+
+                // Position the tooltip near the cursor
+                const rect = templateSelector.getBoundingClientRect();
+                tooltip.style.left = rect.left + 'px';
+                tooltip.style.top = (rect.bottom + 5) + 'px';
+            }
+        }
+    });
+
+    templateSelector.addEventListener('mouseout', function() {
+        tooltip.style.display = 'none';
+    });
+
+    // Update tooltip when template changes
+    templateSelector.addEventListener('change', function() {
+        const selectedOption = templateSelector.options[templateSelector.selectedIndex];
+        const description = selectedOption.getAttribute('data-description');
+        if (description) {
+            tooltip.textContent = description;
+        }
+    });
 }
 
 /**
@@ -235,10 +271,9 @@ function generateFacetSections() {
 
         section.appendChild(facetList);
 
-        // Add resume content container
-        const resumeContent = document.createElement('div');
-        resumeContent.className = 'resume-content';
-        section.appendChild(resumeContent);
+        // We'll append the resume content directly to the facet-info-list
+        // Store a reference to the facet-info-list in a data attribute for later use
+        section.setAttribute('data-facet-list', facetList.id = `facet-list-${targetId}`);
 
         contentSection.appendChild(section);
     });
@@ -450,35 +485,42 @@ function renderResumeContent(facetId, template) {
         return;
     }
 
-    // Find the content container for this facet
-    const contentContainer = document.querySelector(`${facetId} .resume-content`);
-    if (!contentContainer) return;
+    // Get the section element
+    const section = document.querySelector(facetId);
+    if (!section) {
+        console.error('Section not found:', facetId);
+        return;
+    }
 
-    // Clear existing content
-    contentContainer.innerHTML = '';
+    // Get the facet-info-list for this section
+    const facetListId = section.getAttribute('data-facet-list');
+    const facetList = document.getElementById(facetListId);
+    if (!facetList) {
+        console.error('Facet list not found:', facetListId);
+        return;
+    }
 
-    // Create a facet-info-list to match the structure of the facet sections
-    const infoList = document.createElement('ul');
-    infoList.className = 'facet-info-list';
+    // Remove any previously added resume content items
+    // We'll keep the first three items (objective, impact, experience) and remove the rest
+    while (facetList.children.length > 3) {
+        facetList.removeChild(facetList.lastChild);
+    }
 
     // Add basic info section
     const basicInfo = createBasicInfoSection();
-    infoList.appendChild(basicInfo);
+    facetList.appendChild(basicInfo);
 
     // Add skills section
     const skills = createSkillsSection();
-    infoList.appendChild(skills);
+    facetList.appendChild(skills);
 
     // Add work history section based on template
     const workHistory = createWorkHistorySection(template);
-    infoList.appendChild(workHistory);
+    facetList.appendChild(workHistory);
 
     // Add education section
     const education = createEducationSection();
-    infoList.appendChild(education);
-
-    // Add the info list to the container
-    contentContainer.appendChild(infoList);
+    facetList.appendChild(education);
 }
 
 /**
@@ -498,15 +540,12 @@ function createBasicInfoSection() {
     const infoContent = document.createElement('div');
     infoContent.className = 'info-content';
 
-    // Add contact information
+    // Add contact information without the "Contact:" label
     const contactDetails = document.createElement('p');
-    contactDetails.innerHTML = `<strong>Contact:</strong> Email: ${resumeData.basics.email}, Phone: ${resumeData.basics.phone}, Location: ${resumeData.basics.location.city}, ${resumeData.basics.location.region}`;
+    contactDetails.innerHTML = `Email: ${resumeData.basics.email}, Phone: ${resumeData.basics.phone}, Location: ${resumeData.basics.location.city}, ${resumeData.basics.location.region}`;
     infoContent.appendChild(contactDetails);
 
-    // Add professional summary
-    const summaryContent = document.createElement('p');
-    summaryContent.innerHTML = `<strong>Professional Summary:</strong> ${resumeData.basics.summary}`;
-    infoContent.appendChild(summaryContent);
+    // We're removing the professional summary as requested
 
     // Assemble the info item
     infoItem.appendChild(heading);
@@ -575,7 +614,7 @@ function createWorkHistorySection(templateId) {
         return infoItem;
     }
 
-    // Filter work history based on template configuration
+    // Always include work history for all templates
     let workEntries = [...resumeData.work];
     const filters = templateConfig.filters.work;
 
@@ -584,27 +623,142 @@ function createWorkHistorySection(templateId) {
         const cutoffDate = new Date();
         cutoffDate.setFullYear(cutoffDate.getFullYear() - filters.yearsBack);
 
+        console.log('Filtering work history with cutoff date:', cutoffDate);
+
         workEntries = workEntries.filter(job => {
-            const endDate = job.endDate ? new Date(job.endDate) : new Date();
-            return endDate >= cutoffDate;
+            // Parse the end date string (format: YYYY-MM)
+            let endDateObj;
+            if (job.endDate) {
+                const [year, month] = job.endDate.split('-').map(num => parseInt(num, 10));
+                endDateObj = new Date(year, month - 1); // month is 0-indexed in JS Date
+            } else {
+                endDateObj = new Date(); // Current date if no end date (still employed)
+            }
+
+            console.log(`Job: ${job.name}, End date: ${job.endDate}, Parsed date:`, endDateObj);
+
+            return endDateObj >= cutoffDate;
         });
+
+        console.log('Filtered work entries:', workEntries.length);
     }
 
     // Apply summary inclusion/exclusion filters
     if (filters.includeIsSummary) {
         // Add back any summary items that might have been filtered by date
-        const summaryItems = resumeData.work.filter(job => job.isSummary);
-        workEntries = [...new Set([...workEntries, ...summaryItems])];
+        // For this implementation, we'll consider jobs with "summary" in their position as summary items
+        // This is a fallback since the resume.json doesn't have explicit isSummary properties
+        const summaryItems = resumeData.work.filter(job =>
+            job.isSummary ||
+            (job.position && job.position.toLowerCase().includes('summary')) ||
+            (job.name && job.name.toLowerCase().includes('summary'))
+        );
+
+        console.log('Summary items to include:', summaryItems.length);
+
+        // Add summary items that weren't already included
+        summaryItems.forEach(item => {
+            if (!workEntries.some(entry => entry.name === item.name && entry.position === item.position)) {
+                workEntries.push(item);
+            }
+        });
     }
 
     if (filters.excludeIsSummary) {
-        workEntries = workEntries.filter(job => !job.isSummary);
+        workEntries = workEntries.filter(job =>
+            !job.isSummary &&
+            !(job.position && job.position.toLowerCase().includes('summary')) &&
+            !(job.name && job.name.toLowerCase().includes('summary'))
+        );
+
+        console.log('After excluding summary items:', workEntries.length);
+    }
+
+    // Check if we have any work entries
+    if (workEntries.length === 0) {
+        console.log('No work entries after filtering, using fallback');
+
+        // Fallback: If Current Focus template has no entries, show at least the most recent ones
+        if (templateId === 'current-focus') {
+            // Sort work entries by end date (most recent first)
+            const sortedEntries = [...resumeData.work].sort((a, b) => {
+                // Parse the end date string (format: YYYY-MM)
+                let aDate, bDate;
+
+                if (a.endDate) {
+                    const [aYear, aMonth] = a.endDate.split('-').map(num => parseInt(num, 10));
+                    aDate = new Date(aYear, aMonth - 1); // month is 0-indexed in JS Date
+                } else {
+                    aDate = new Date(); // Current date if no end date (still employed)
+                }
+
+                if (b.endDate) {
+                    const [bYear, bMonth] = b.endDate.split('-').map(num => parseInt(num, 10));
+                    bDate = new Date(bYear, bMonth - 1); // month is 0-indexed in JS Date
+                } else {
+                    bDate = new Date(); // Current date if no end date (still employed)
+                }
+
+                return bDate - aDate; // Descending order (most recent first)
+            });
+
+            // Take the 3 most recent entries
+            workEntries = sortedEntries.slice(0, 3);
+
+            console.log('Using fallback with most recent entries:', workEntries.length);
+        }
+    }
+
+    // If still no entries, show a message
+    if (workEntries.length === 0) {
+        const noWorkMessage = document.createElement('p');
+        noWorkMessage.textContent = 'No work history to display for the selected template.';
+        workContent.appendChild(noWorkMessage);
+
+        // Assemble the info item
+        infoItem.appendChild(heading);
+        infoItem.appendChild(document.createTextNode(': '));
+        infoItem.appendChild(workContent);
+
+        return infoItem;
     }
 
     // Add each job
     workEntries.forEach(job => {
         const jobDiv = document.createElement('div');
         jobDiv.className = 'job-item';
+
+        // Create a container for the job header with icon
+        const jobHeader = document.createElement('div');
+        jobHeader.className = 'job-header';
+
+        // Add company icon
+        const companyIcon = document.createElement('div');
+        companyIcon.className = 'company-icon';
+
+        // Determine which icon to use based on company type or name
+        let iconPath = 'assets/icons/companies/tech-company.svg';
+        if (job.name.toLowerCase().includes('data') || job.position.toLowerCase().includes('data')) {
+            iconPath = 'assets/icons/companies/data-company.svg';
+        } else if (job.name.toLowerCase().includes('consult') || job.position.toLowerCase().includes('consult')) {
+            iconPath = 'assets/icons/companies/consulting-company.svg';
+        } else if (job.name.toLowerCase().includes('university') || job.name.toLowerCase().includes('college') || job.name.toLowerCase().includes('school')) {
+            iconPath = 'assets/icons/companies/education.svg';
+        } else if (job.name.toLowerCase().includes('startup') || job.position.toLowerCase().includes('founder')) {
+            iconPath = 'assets/icons/companies/startup.svg';
+        }
+
+        // Fetch and insert the SVG
+        fetch(iconPath)
+            .then(response => response.text())
+            .then(svgContent => {
+                companyIcon.innerHTML = svgContent;
+            })
+            .catch(error => {
+                console.error('Error loading company icon:', error);
+            });
+
+        jobHeader.appendChild(companyIcon);
 
         // Job title and company
         const jobTitle = document.createElement('p');
@@ -614,7 +768,9 @@ function createWorkHistorySection(templateId) {
         } else {
             jobTitle.innerHTML = `<strong>${job.name}</strong>`;
         }
-        jobDiv.appendChild(jobTitle);
+
+        jobHeader.appendChild(jobTitle);
+        jobDiv.appendChild(jobHeader);
 
         // Job period and location
         const jobDetails = document.createElement('p');
@@ -685,16 +841,45 @@ function createEducationSection() {
     const educationContent = document.createElement('div');
     educationContent.className = 'info-content';
 
+    // Check if we have any education entries
+    if (!resumeData.education || resumeData.education.length === 0) {
+        const noEducationMessage = document.createElement('p');
+        noEducationMessage.textContent = 'No education history to display.';
+        educationContent.appendChild(noEducationMessage);
+    }
+
     // Add each education entry
     resumeData.education.forEach(edu => {
         const eduDiv = document.createElement('div');
         eduDiv.className = 'education-item';
 
+        // Create a container for the education header with icon
+        const eduHeader = document.createElement('div');
+        eduHeader.className = 'education-header';
+
+        // Add institution icon
+        const institutionIcon = document.createElement('div');
+        institutionIcon.className = 'institution-icon';
+
+        // Fetch and insert the education SVG
+        fetch('assets/icons/companies/education.svg')
+            .then(response => response.text())
+            .then(svgContent => {
+                institutionIcon.innerHTML = svgContent;
+            })
+            .catch(error => {
+                console.error('Error loading education icon:', error);
+            });
+
+        eduHeader.appendChild(institutionIcon);
+
         // Degree and area
         const degree = document.createElement('p');
         degree.className = 'degree';
         degree.innerHTML = `<strong>${edu.studyType} in ${edu.area}</strong>`;
-        eduDiv.appendChild(degree);
+        eduHeader.appendChild(degree);
+
+        eduDiv.appendChild(eduHeader);
 
         // Institution and year
         const details = document.createElement('p');
@@ -837,13 +1022,10 @@ function rebuildContentArea() {
             facetList.appendChild(experienceItem);
         }
 
+        // Store a reference to the facet-info-list in a data attribute for later use
+        section.setAttribute('data-facet-list', facetList.id = `facet-list-${targetId}`);
+
         section.appendChild(facetList);
-
-        // Add resume content container
-        const resumeContent = document.createElement('div');
-        resumeContent.className = 'resume-content';
-        section.appendChild(resumeContent);
-
         contentSection.appendChild(section);
     });
 
