@@ -15,12 +15,24 @@
   width: 100%;
   box-sizing: border-box;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Ensure content doesn't overflow */
 }
 
-/* Sticky Header Content */
+/* Ensure content stays within bounds */
 .hero {
-  transition: all 0.3s ease;
-  padding: var(--space-4) var(--space-3);
+  position: relative;
+  z-index: 1; /* Lower than wrapper */
+}
+
+/* Adjust transition for shrinking */
+.hero-wrapper.shrink {
+  transition: max-height 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Sticky Header Content - keep same transition time both ways */
+.hero {
+  transition: all 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+  padding: var(--space-3) var(--space-3);
   max-width: 1280px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -39,23 +51,39 @@ body {
   color: var(--text-heading);
   font-family: var(--font-heading);
   font-weight: var(--font-weight-bold, 700);
+  transition: font-size 1.25s cubic-bezier(0.25, 0.1, 0.25, 1), margin 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .hero .hero-content .tagline {
   font-size: var(--font-size-hero-tagline);
   color: var(--text-muted);
   margin-bottom: var(--space-2);
+  margin-top: var(--space-1);
   font-family: var(--font-body);
   font-weight: var(--font-weight-normal, 400);
+  transition: font-size 1.25s cubic-bezier(0.25, 0.1, 0.25, 1), margin 1.25s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 /* Shrink header on scroll */
+.hero-wrapper {
+  /* Default variable for shrink height, will be overridden by JS */
+  --shrink-height: auto;
+  --initial-height: auto;
+  transition: all 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+  max-height: var(--initial-height, 500px); /* Fallback value */
+  will-change: max-height, transform;
+}
+
 .hero-wrapper.shrink {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-height: var(--shrink-height);
+  overflow: hidden;
 }
 
 .hero-wrapper.shrink .hero {
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  transform: scale(0.98);
+  transform-origin: top center;
 }
 
 .hero-wrapper.shrink h1 {
@@ -71,29 +99,31 @@ body {
 
 .hero-wrapper.shrink .facets ul {
   margin: var(--space-1) 0;
+  transform: scale(0.98);
 }
 
 /* Navigation Pills */
 .facets ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--space-3);
   list-style: none;
   padding: 0;
   margin: var(--space-2) 0;
   justify-content: center;
+  transition: all 1.25s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .facets a {
   display: flex;
   align-items: center;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-1) var(--space-2);
   background-color: var(--surface-alt);
   border-radius: 2rem;
   text-decoration: none;
   color: var(--text);
   font-size: var(--font-size-facet-pill);
-  transition: all 0.2s ease;
+  transition: all 1.25s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.25s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .facets a:hover {

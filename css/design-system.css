@@ -42,9 +42,9 @@
   --font-size-h4: var(--step--1);
 
   /* Hero section */
-  --font-size-hero-title: var(--step-4);       /* Increased from --step--1 to --step-4 */
-  --font-size-hero-tagline: var(--step-2);     /* Adjusted to be smaller than the title */
-  --font-size-hero-shrink-title: var(--step-1); /* Slightly smaller when header shrinks */
+  --font-size-hero-title: var(--step-5);       /* Increased from --step--1 to --step-4 */
+  --font-size-hero-tagline: var(--step-3);     /* Adjusted to be smaller than the title */
+  --font-size-hero-shrink-title: var(--step-3); /* Slightly smaller when header shrinks */
   --font-size-hero-shrink-tagline: var(--step-1); /* Smaller tagline when header shrinks */
 
   /* Facet sections */

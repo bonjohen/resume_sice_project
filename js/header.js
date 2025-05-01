@@ -1,6 +1,6 @@
 /**
  * Header functionality for Phase II implementation
- * - Implements sticky header that shrinks on scroll
+ * - Implements sticky header that shrinks on scroll to 20% of initial height
  * - Adds smooth scroll for anchor links
  * - Highlights active facet using Intersection Observer
  */
@@ -18,9 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Get the header wrapper element
   const headerWrapper = document.querySelector('.hero-wrapper');
 
+  // Store the initial height of the header wrapper
+  let initialHeaderHeight = 0;
+
   // Function to update body padding based on header height
   function updateBodyPadding() {
     const headerHeight = headerWrapper.offsetHeight;
+
+    // Store initial height if not already set
+    if (initialHeaderHeight === 0 && !headerWrapper.classList.contains('shrink')) {
+      initialHeaderHeight = headerHeight;
+      console.log(`Initial header height: ${initialHeaderHeight}px`);
+    }
+
     document.body.style.paddingTop = `${headerHeight}px`;
     console.log(`Header height: ${headerHeight}px - Body padding updated`);
 
@@ -34,21 +44,43 @@ document.addEventListener('DOMContentLoaded', () => {
   updateBodyPadding();
 
   // Update padding after images and fonts have loaded
-  window.addEventListener('load', updateBodyPadding);
+  window.addEventListener('load', () => {
+    updateBodyPadding();
+    // Make sure we capture the initial height after everything is loaded
+    initialHeaderHeight = headerWrapper.offsetHeight;
+    console.log(`Initial header height (after load): ${initialHeaderHeight}px`);
+
+    // Set the initial height CSS variable
+    headerWrapper.style.setProperty('--initial-height', `${initialHeaderHeight}px`);
+  });
 
   // Update padding when window is resized
   window.addEventListener('resize', updateBodyPadding);
 
-  // Implement sticky header that shrinks on scroll
+  // Implement sticky header that shrinks on scroll to 20% of initial height
   window.addEventListener('scroll', () => {
     if (window.scrollY > 60) {
-      headerWrapper.classList.add('shrink');
-      // Update padding after shrinking
-      setTimeout(updateBodyPadding, 300); // Wait for transition to complete
+      if (!headerWrapper.classList.contains('shrink')) {
+        // Apply the shrink class
+        headerWrapper.classList.add('shrink');
+
+        // If we have the initial height, set the height to 20% of initial
+        if (initialHeaderHeight > 0) {
+          const targetHeight = initialHeaderHeight * 0.25; // 25% of initial height
+          headerWrapper.style.setProperty('--shrink-height', `${targetHeight}px`);
+        }
+      }
+      // Update padding after shrinking - use longer transition time
+      setTimeout(updateBodyPadding, 1250);
     } else {
-      headerWrapper.classList.remove('shrink');
-      // Update padding after expanding
-      setTimeout(updateBodyPadding, 300); // Wait for transition to complete
+      if (headerWrapper.classList.contains('shrink')) {
+        // Remove the shrink class
+        headerWrapper.classList.remove('shrink');
+        // Reset any inline height
+        headerWrapper.style.removeProperty('--shrink-height');
+      }
+      // Update padding after expanding - use shorter transition time
+      setTimeout(updateBodyPadding, 250);
     }
   });
 
