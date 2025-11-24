@@ -6,6 +6,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure page starts at the top
+  window.scrollTo(0, 0);
+
   // Create a wrapper for the hero element if it doesn't exist
   const hero = document.querySelector('.hero');
   if (hero && !hero.parentElement.classList.contains('hero-wrapper')) {
@@ -25,10 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateBodyPadding() {
     const headerHeight = headerWrapper.offsetHeight;
 
-    // Store initial height if not already set
-    if (initialHeaderHeight === 0 && !headerWrapper.classList.contains('shrink')) {
+    // Only store initial height if we have content and not shrunk
+    if (initialHeaderHeight === 0 && !headerWrapper.classList.contains('shrink') && headerHeight > 50) {
       initialHeaderHeight = headerHeight;
       console.log(`Initial header height: ${initialHeaderHeight}px`);
+      // Set explicit height on wrapper for smooth transitions
+      headerWrapper.style.height = `${initialHeaderHeight}px`;
     }
 
     document.body.style.paddingTop = `${headerHeight}px`;
@@ -40,47 +45,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initial update of body padding
-  updateBodyPadding();
+  // Wait a bit for content to load before initial update
+  setTimeout(() => {
+    updateBodyPadding();
+  }, 100);
 
   // Update padding after images and fonts have loaded
   window.addEventListener('load', () => {
-    updateBodyPadding();
-    // Make sure we capture the initial height after everything is loaded
-    initialHeaderHeight = headerWrapper.offsetHeight;
-    console.log(`Initial header height (after load): ${initialHeaderHeight}px`);
+    // Wait a bit more to ensure content is fully rendered
+    setTimeout(() => {
+      // Force recalculation of initial height
+      headerWrapper.style.height = 'auto';
+      initialHeaderHeight = headerWrapper.offsetHeight;
+      console.log(`Initial header height (after load): ${initialHeaderHeight}px`);
 
-    // Set the initial height CSS variable
-    headerWrapper.style.setProperty('--initial-height', `${initialHeaderHeight}px`);
+      // Set explicit height for smooth transitions
+      headerWrapper.style.height = `${initialHeaderHeight}px`;
+      updateBodyPadding();
+    }, 200);
   });
 
   // Update padding when window is resized
-  window.addEventListener('resize', updateBodyPadding);
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      // Recalculate initial height on resize if not shrunk
+      if (!headerWrapper.classList.contains('shrink')) {
+        headerWrapper.style.height = 'auto';
+        initialHeaderHeight = headerWrapper.offsetHeight;
+        headerWrapper.style.height = `${initialHeaderHeight}px`;
+      }
+      updateBodyPadding();
+    }, 100);
+  });
 
   // Implement sticky header that shrinks on scroll to 20% of initial height
+  let scrollTimeout;
   window.addEventListener('scroll', () => {
     if (window.scrollY > 60) {
       if (!headerWrapper.classList.contains('shrink')) {
         // Apply the shrink class
         headerWrapper.classList.add('shrink');
 
-        // If we have the initial height, set the height to 20% of initial
+        // If we have the initial height, set the height to 25% of initial
         if (initialHeaderHeight > 0) {
           const targetHeight = initialHeaderHeight * 0.25; // 25% of initial height
-          headerWrapper.style.setProperty('--shrink-height', `${targetHeight}px`);
+          headerWrapper.style.height = `${targetHeight}px`;
+
+          // Update body padding immediately to prevent gap
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            updateBodyPadding();
+          }, 50);
         }
       }
-      // Update padding after shrinking - use longer transition time
-      setTimeout(updateBodyPadding, 1250);
     } else {
       if (headerWrapper.classList.contains('shrink')) {
         // Remove the shrink class
         headerWrapper.classList.remove('shrink');
-        // Reset any inline height
-        headerWrapper.style.removeProperty('--shrink-height');
+
+        // Restore to initial height
+        if (initialHeaderHeight > 0) {
+          headerWrapper.style.height = `${initialHeaderHeight}px`;
+
+          // Update body padding immediately to prevent gap
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            updateBodyPadding();
+          }, 50);
+        }
       }
-      // Update padding after expanding - use shorter transition time
-      setTimeout(updateBodyPadding, 250);
     }
   });
 
@@ -145,4 +180,19 @@ document.addEventListener('DOMContentLoaded', () => {
       heading.style.scrollMarginTop = '80px'; // Adjust based on header height
     }
   });
+
+  // Expose a global function to recalculate header height when content changes
+  window.recalculateHeaderHeight = function() {
+    console.log('Recalculating header height...');
+    headerWrapper.style.height = 'auto';
+    const newHeight = headerWrapper.offsetHeight;
+
+    // Update initial height if not shrunk
+    if (!headerWrapper.classList.contains('shrink')) {
+      initialHeaderHeight = newHeight;
+      headerWrapper.style.height = `${newHeight}px`;
+    }
+
+    updateBodyPadding();
+  };
 });

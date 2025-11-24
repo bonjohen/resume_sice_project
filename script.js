@@ -53,8 +53,8 @@ async function init() {
         // Set up event listeners
         setupEventListeners();
 
-        // Overview is already active by default
-        currentFacet = '#overview';
+        // General is already active by default
+        currentFacet = '#general';
 
         console.log('Resume site initialized successfully');
     } catch (error) {
@@ -185,7 +185,7 @@ function generateHeroSection() {
             <ul>
                 ${facetsData.map((facet) => `
                     <li><a href="${facet.targetSelector}"
-                          ${facet.title === "Overview" ? 'class="active"' : ''}
+                          ${facet.title === "General" ? 'class="active"' : ''}
                           aria-label="${facet.ariaLabel}">
                         <span class="icon ${facet.icon}"></span>${facet.title}
                     </a></li>
@@ -193,6 +193,13 @@ function generateHeroSection() {
             </ul>
         </nav>
     `;
+
+    // Notify header.js to recalculate height after content is added
+    setTimeout(() => {
+        if (window.recalculateHeaderHeight) {
+            window.recalculateHeaderHeight();
+        }
+    }, 50);
 }
 
 /**
@@ -213,8 +220,8 @@ function generateFacetSections() {
         section.id = targetId;
         section.className = 'facet-section';
 
-        // Make the Overview section active by default
-        if (facet.title === "Overview") {
+        // Make the General section active by default
+        if (facet.title === "General") {
             section.classList.add('active');
         }
 
@@ -253,7 +260,7 @@ function generateFacetSections() {
 
         const descriptionTitle = document.createElement('h3');
         descriptionTitle.className = 'info-heading';
-        descriptionTitle.textContent = 'Industry Impact';
+        descriptionTitle.textContent = 'Role Focus';
 
         const descriptionContent = document.createElement('div');
         descriptionContent.className = 'info-content';
@@ -296,10 +303,10 @@ function generateFacetSections() {
         contentSection.appendChild(section);
     });
 
-    // Set current facet to Overview
-    currentFacet = '#overview';
+    // Set current facet to General
+    currentFacet = '#general';
 
-    // Render resume content for the overview section
+    // Render resume content for the general section
     renderResumeContent(currentFacet, currentTemplate);
 }
 
@@ -1017,7 +1024,7 @@ function rebuildContentArea() {
         section.className = 'facet-section';
 
         // Make Overview active by default
-        if (facet.title === "Overview") {
+        if (facet.title === "General") {
             section.classList.add('active');
             currentFacet = `#${targetId}`;
         }
@@ -1060,7 +1067,7 @@ function rebuildContentArea() {
 
             const descriptionTitle = document.createElement('h3');
             descriptionTitle.className = 'info-heading';
-            descriptionTitle.textContent = 'Industry Impact';
+            descriptionTitle.textContent = 'Role Focus';
 
             const descriptionContent = document.createElement('div');
             descriptionContent.className = 'info-content';

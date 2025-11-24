@@ -8,8 +8,10 @@ body {
   max-width: 1280px;
   min-width: 400px;
   margin: 0 auto;
-  padding: var(--space-3);
+  padding: 200px var(--space-3) var(--space-3) var(--space-3);
   background-color: var(--surface);
+  /* padding-top initial value, will be updated by header.js to match actual header height */
+  position: relative;
 }
 
 /* Main Content Area */
@@ -17,6 +19,9 @@ body {
   min-width: 400px;
   max-width: 1280px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  /* No top margin needed - body padding-top handles spacing from fixed header */
 }
 
 /* Footer layout */

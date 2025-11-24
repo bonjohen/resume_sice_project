@@ -166,6 +166,10 @@ select {
     background-image: url('assets/icons/user.svg');
 }
 
+.icon.user {
+    background-image: url('assets/icons/layers.svg');
+}
+
 .icon.code {
     background-image: url('assets/icons/code.svg');
 }
